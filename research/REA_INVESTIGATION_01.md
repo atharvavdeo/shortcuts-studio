@@ -6,7 +6,7 @@ REA 6.5.0 was acquired through version-pinned npm execution. Node 22.22.3 satisf
 
 Actual REA Evidence records are retained under `rea-evidence/`, with identifiers in `index.json`. `inspect-artifact` completed an inventory substep; this establishes bounded bundle anatomy, not function behavior. `inspect-plist` reports com.apple.shortcuts, version 10.0, build 5037.0.19, with declared AppleScript support. `inspect-macho` identifies a selected arm64e slice, minimum macOS 27.0, SDK 27.0 and executable load metadata. Main executable SHA256: 2a3c512667ec596a00668e17845f0bf4cbba1e0407621a1cc85e8b1042356775.
 
-Provider readiness confirmed Ghidra unconfigured, Hopper launcher absent, IDA unconfigured. Java 21.0.6 is installed. The official Ghidra 12.1.4 archive is being acquired in ignored `.tools` for the compatible free native provider; tooling is excluded from publication. No Apple permissions or live message transmission occurred.
+Provider readiness confirmed Ghidra unconfigured, Hopper launcher absent, IDA unconfigured. Java 21.0.6 is installed. The official Ghidra 12.1.4 archive was acquired in ignored `.tools`; SHA256 ddac49f903da9d5bac833e5cc79395098b9c33cfd3279be5f31bd00387d2d4db matches the official release asset digest. The missing Mac ARM native decompiler was built from shipped source with two low-priority jobs and placed in the expected mac_arm_64 location. All nine scoped REA doctor checks now pass, including Java, version and native decompiler. Tooling is excluded from publication. A Ghidra inspect pass against the main executable has started. No Apple permissions or live message transmission occurred.
 
 ## Bounded reconstruction questions
 
