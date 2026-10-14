@@ -9,3 +9,6 @@ node_modules/
 *.log
 verification/build-manifest.json
 verification/distribution-validation.json
+
+.tools/
+.rea-runtime/

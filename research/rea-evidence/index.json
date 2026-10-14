@@ -1,0 +1,49 @@
+[
+  {
+    "file": "shortcuts-artifact.json",
+    "evidence_id": "ev_4c6273f1262ed6f0869482aff2fed3c75237ef4e464f80cf111b8fce0f8407c0",
+    "subject": {
+      "name": "Shortcuts.app",
+      "digest": {
+        "sha256": "714440932c0cc8c1ddad810532b81991c86b7e0194981d36893f64fa06b180cf"
+      },
+      "local_path": "/System/Applications/Shortcuts.app",
+      "format": "directory",
+      "architecture": null
+    },
+    "limitations": [
+      "Inspection derives bounded static hypotheses and next probes; it does not execute the artifact or claim format-specific semantics."
+    ]
+  },
+  {
+    "file": "shortcuts-plist.json",
+    "evidence_id": "ev_d17d95f9f24931a4ef22d2c09da38aac7b1f46b47cc64bc7978de3bfaaf8c537",
+    "subject": {
+      "name": "Shortcuts",
+      "digest": {
+        "sha256": "2a3c512667ec596a00668e17845f0bf4cbba1e0407621a1cc85e8b1042356775"
+      },
+      "local_path": "/System/Applications/Shortcuts.app/Contents/MacOS/Shortcuts",
+      "format": "mach-o-universal",
+      "architecture": "arm64"
+    },
+    "limitations": []
+  },
+  {
+    "file": "shortcuts-macho.json",
+    "evidence_id": "ev_8306ec42eff0acbb3a4e10f0642306a4914091a37c6947e17263bdd9cec1b29a",
+    "subject": {
+      "name": "Shortcuts",
+      "digest": {
+        "sha256": "2a3c512667ec596a00668e17845f0bf4cbba1e0407621a1cc85e8b1042356775"
+      },
+      "local_path": "/System/Applications/Shortcuts.app/Contents/MacOS/Shortcuts",
+      "format": "mach-o-universal",
+      "architecture": "arm64"
+    },
+    "limitations": [
+      "Imports and exports combine dyld_info and nm; stripped or toolchain-hidden symbols may be absent.",
+      "vtool output is retained as provenance but only otool build metadata is normalized."
+    ]
+  }
+]
