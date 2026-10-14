@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: private routes require role credentials
+ok 1 - private routes require role credentials
+  ---
+  duration_ms: 34.111167
+  type: 'test'
+  ...
+# Subtest: pairing is single-use and needs Mac approval
+ok 2 - pairing is single-use and needs Mac approval
+  ---
+  duration_ms: 11.852792
+  type: 'test'
+  ...
+# Subtest: offline Mac refuses new execution
+ok 3 - offline Mac refuses new execution
+  ---
+  duration_ms: 6.000709
+  type: 'test'
+  ...
+# Subtest: identical request deduplicates, changed body conflicts
+ok 4 - identical request deduplicates, changed body conflicts
+  ---
+  duration_ms: 5.545083
+  type: 'test'
+  ...
+# Subtest: run read and cancel require ownership
+ok 5 - run read and cancel require ownership
+  ---
+  duration_ms: 9.028708
+  type: 'test'
+  ...
+# Subtest: expired unaccepted commands cannot arrive later
+ok 6 - expired unaccepted commands cannot arrive later
+  ---
+  duration_ms: 4.798625
+  type: 'test'
+  ...
+# Subtest: terminal states cannot regress or change output
+ok 7 - terminal states cannot regress or change output
+  ---
+  duration_ms: 6.618084
+  type: 'test'
+  ...
+# Subtest: revocation removes phone authorization
+ok 8 - revocation removes phone authorization
+  ---
+  duration_ms: 3.342541
+  type: 'test'
+  ...
+# Subtest: push registration cannot fetch arbitrary endpoints
+ok 9 - push registration cannot fetch arbitrary endpoints
+  ---
+  duration_ms: 4.699709
+  type: 'test'
+  ...
+# Subtest: unknown keys and oversized commands are rejected
+ok 10 - unknown keys and oversized commands are rejected
+  ---
+  duration_ms: 4.987042
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 171.604625

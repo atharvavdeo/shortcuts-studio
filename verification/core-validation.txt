@@ -1,0 +1,107 @@
+Building for debugging...
+[Planning deferred tasks]
+[3 / 18] WorkflowCore
+[11 / 26] WorkflowCore
+[15 / 24] WorkflowCore
+[15 / 24] ShortcutStudio-product
+[16 / 34]
+[24 / 34] ShortcutStudio-product
+[27 / 34]
+/Users/atharvadeo/Documents/Apple Word/ShortcutStudio/Package.swift: WorkflowCore: ld: warning: search path '/Library/Developer/CommandLineTools/Developer/Library/Frameworks' not found
+[29 / 35] ShortcutStudio-product
+[32 / 39] ShortcutStudio-product
+[32 / 39] WorkflowCoreTests-product
+[34 / 39] WorkflowCoreTests-product
+[36 / 39] ShortcutStudio-product
+/Users/atharvadeo/Documents/Apple Word/ShortcutStudio/Package.swift: WorkflowCoreTests-product: ld: warning: search path '/Library/Developer/CommandLineTools/Developer/usr/lib' not found
+/Users/atharvadeo/Documents/Apple Word/ShortcutStudio/Package.swift: WorkflowCoreTests-product: ld: warning: search path '/Library/Developer/CommandLineTools/Developer/Library/Frameworks' not found
+[37 / 40] WorkflowCoreTests-product
+[39 / 41] ShortcutStudio-product
+/Users/atharvadeo/Documents/Apple Word/ShortcutStudio/Package.swift: ShortcutStudio-product: ld: warning: search path '/Library/Developer/CommandLineTools/Developer/usr/lib' not found
+/Users/atharvadeo/Documents/Apple Word/ShortcutStudio/Package.swift: ShortcutStudio-product: ld: warning: search path '/Library/Developer/CommandLineTools/Developer/Library/Frameworks' not found
+[41 / 43] ShortcutStudio-product
+Build complete! (5.29 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite PersistenceTests started.
+◇ Suite EngineTests started.
+◇ Suite InvalidScheduleTests started.
+◇ Suite ModelDraftTests started.
+◇ Test testAtomicSaveBackupAndCorruptionRecovery() started.
+◇ Test testListOperationsAndStatistics() started.
+◇ Test testDivisionByZeroAndNonfiniteRejected() started.
+◇ Test testBlockMovePreservesStructureAndRejectsMarkers() started.
+◇ Test testStorageCommitAndFailure() started.
+◇ Test testDuplicatingRemapsActionReferencesAndQuestions() started.
+◇ Test testSkippedLoopOutputCannotLeakFromEarlierIteration() started.
+◇ Test testStepBudgetBoundsRun() started.
+◇ Suite AutomationTests started.
+◇ Test testPortableWorkflowRoundTripAndBadImport() started.
+◇ Test testTypedInputSurvivesExactReference() started.
+◇ Test testMissingReferenceFailsInsteadOfUsingStaleValue() started.
+◇ Test testUnknownLibrarySchemaDoesNotOverwriteFile() started.
+◇ Test testTextTransformationsAndEncoding() started.
+◇ Test testUnicodeInterpolationUsesValidRanges() started.
+◇ Test testEveryCatalogKindIsUniqueAndTemplatesValidate() started.
+◇ Test testRecursiveShortcutRejected() started.
+◇ Test testBlockRemovalClearsImportQuestions() started.
+◇ Test testStructuralValidationRejectsCrossedBlocks() started.
+◇ Test testJSONTypesAndDictionaryPath() started.
+◇ Test testBadRegexAndInvalidBase64Fail() started.
+◇ Test testRoundingOverflowFails() started.
+◇ Test testRepeatPreservesOuterScope() started.
+◇ Suite WeekdayAutomationTests started.
+◇ Test testNestedBranchesAndLoops() started.
+◇ Test testStopInsideLoopPropagates() started.
+◇ Test testBlockDuplicateRemapsInternalReferences() started.
+◇ Test testCancellationDoesNotExecuteNextAction() started.
+◇ Test persistenceRejectsInvalidWeekdays() started.
+◇ Test invalidModelDraftsAreRejected() started.
+◇ Test testDailyTriggerDoesNotReplayClaimedRun() started.
+◇ Test validDraftUsesLocalIdentityAndDefaults() started.
+✔ Test testBlockMovePreservesStructureAndRejectsMarkers() passed after 0.001 seconds.
+✔ Test testDuplicatingRemapsActionReferencesAndQuestions() passed after 0.001 seconds.
+✔ Test testStructuralValidationRejectsCrossedBlocks() passed after 0.001 seconds.
+✔ Test testBlockRemovalClearsImportQuestions() passed after 0.001 seconds.
+◇ Test multilineAndEmptyTextInputPreserveType() started.
+◇ Test oldAutomationDecodesAndNewDaysRoundTrip() started.
+◇ Test weekdayFilterAndDisabledRule() started.
+◇ Test testMissedWindowAndLateStartupAreSkipped() started.
+✔ Test testBlockDuplicateRemapsInternalReferences() passed after 0.001 seconds.
+✔ Test testEveryCatalogKindIsUniqueAndTemplatesValidate() passed after 0.001 seconds.
+✔ Test persistenceRejectsInvalidWeekdays() passed after 0.001 seconds.
+✔ Test testPortableWorkflowRoundTripAndBadImport() passed after 0.001 seconds.
+✔ Test oldAutomationDecodesAndNewDaysRoundTrip() passed after 0.001 seconds.
+✔ Test testDailyTriggerDoesNotReplayClaimedRun() passed after 0.001 seconds.
+✔ Suite InvalidScheduleTests passed after 0.001 seconds.
+✔ Test testMissedWindowAndLateStartupAreSkipped() passed after 0.001 seconds.
+✔ Test weekdayFilterAndDisabledRule() passed after 0.001 seconds.
+✔ Suite AutomationTests passed after 0.001 seconds.
+✔ Test testUnknownLibrarySchemaDoesNotOverwriteFile() passed after 0.001 seconds.
+✔ Test validDraftUsesLocalIdentityAndDefaults() passed after 0.001 seconds.
+✔ Test invalidModelDraftsAreRejected() passed after 0.001 seconds.
+✔ Suite ModelDraftTests passed after 0.002 seconds.
+✔ Test testMissingReferenceFailsInsteadOfUsingStaleValue() passed after 0.002 seconds.
+✔ Test testUnicodeInterpolationUsesValidRanges() passed after 0.002 seconds.
+✔ Test testRecursiveShortcutRejected() passed after 0.002 seconds.
+✔ Test testAtomicSaveBackupAndCorruptionRecovery() passed after 0.004 seconds.
+✔ Suite PersistenceTests passed after 0.004 seconds.
+✔ Test testDivisionByZeroAndNonfiniteRejected() passed after 0.008 seconds.
+✔ Test testTypedInputSurvivesExactReference() passed after 0.008 seconds.
+✔ Test testJSONTypesAndDictionaryPath() passed after 0.008 seconds.
+✔ Test testRoundingOverflowFails() passed after 0.008 seconds.
+✔ Test testBadRegexAndInvalidBase64Fail() passed after 0.008 seconds.
+✔ Test testStopInsideLoopPropagates() passed after 0.008 seconds.
+✔ Test multilineAndEmptyTextInputPreserveType() passed after 0.007 seconds.
+✔ Suite WeekdayAutomationTests passed after 0.009 seconds.
+✔ Test testStorageCommitAndFailure() passed after 0.009 seconds.
+✔ Test testStepBudgetBoundsRun() passed after 0.009 seconds.
+✔ Test testSkippedLoopOutputCannotLeakFromEarlierIteration() passed after 0.010 seconds.
+✔ Test testNestedBranchesAndLoops() passed after 0.009 seconds.
+✔ Test testRepeatPreservesOuterScope() passed after 0.010 seconds.
+✔ Test testListOperationsAndStatistics() passed after 0.010 seconds.
+✔ Test testTextTransformationsAndEncoding() passed after 0.010 seconds.
+✔ Test testCancellationDoesNotExecuteNextAction() passed after 0.036 seconds.
+✔ Suite EngineTests passed after 0.037 seconds.
+✔ Test run with 34 tests in 6 suites passed after 0.037 seconds.

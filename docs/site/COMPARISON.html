@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Are we better than Apple Shortcuts? — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="are-we-better-than-apple-shortcuts">Are we better than Apple Shortcuts?</h1>
+<p>There is no evidence that Shortcut Studio is generally better, faster, safer, easier, or more capable. It has a smaller independent feature set. The useful differentiator today is <strong>engineering control over this implementation</strong>.</p>
+<h2 id="evidence-based-comparison">Evidence-based comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Shortcut Studio today</th>
+<th>Apple Shortcuts / comparison boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inspect and modify execution</td>
+<td>Source, named Swift library API, tests and documented semantics available in this checkout</td>
+<td>Apple's public CLI does not expose its private engine source; our source is not yet publicly licensed/hosted</td>
+</tr>
+<tr>
+<td>Versionable authoring</td>
+<td>Own readable JSON envelope and stable action kinds; generated catalog</td>
+<td>Easier to inspect for our own format; no measured collaboration advantage and no Apple signed-format interchange</td>
+</tr>
+<tr>
+<td>Predictable bounded control</td>
+<td>Explicit step/loop/call budgets and commit/cancellation semantics</td>
+<td>These are documented design choices, not evidence that Apple's runtime is unsafe or unbounded</td>
+</tr>
+<tr>
+<td>Model integration</td>
+<td>Explicit on-device service, inspectable prompts/schemas, streaming and review</td>
+<td>Apple also supports intelligent actions; this is not a unique AI capability</td>
+</tr>
+<tr>
+<td>Action/content breadth</td>
+<td>64 kinds; Text/Number/Boolean/List/Dictionary</td>
+<td>Apple's guide includes text, images, webpages and richer ecosystem integrations; standalone parity is absent</td>
+</tr>
+<tr>
+<td>Apple integration</td>
+<td>Delegates installed workflows through Apple's supported CLI</td>
+<td>The delegated capability remains Apple's; it is not an independent superiority claim</td>
+</tr>
+<tr>
+<td>Ecosystem convenience</td>
+<td>Local Mac library and app-open triggers</td>
+<td>Apple documents iCloud synchronization across devices; Studio has no iCloud/Siri/widgets/App Intents integration</td>
+</tr>
+<tr>
+<td>Android control</td>
+<td>Browser messenger, test relay and Mac grants implemented; no native APK</td>
+<td>The companion can support cross-platform ownership; Android could also drive an authorized Mac CLI bridge, so this is not a new Apple engine primitive</td>
+</tr>
+<tr>
+<td>Performance/reliability/usability</td>
+<td>Named synthetic and live local checks</td>
+<td>No matched benchmarks, representative user study, accessibility certification or production reliability data</td>
+</tr>
+</tbody>
+</table>
+<p>Apple references: <a href="https://support.apple.com/guide/shortcuts-mac/apdb5506f698/mac">variables/content</a>, <a href="https://support.apple.com/guide/shortcuts-mac/apdb3a4240b0/mac">iCloud sync</a>, <a href="https://support.apple.com/guide/shortcuts-mac/apd455c82f02/mac">CLI</a>, <a href="https://support.apple.com/guide/shortcuts/use-apple-intelligence-in-shortcuts-tpg3vrvwmclv/ios">intelligent actions on supported Apple devices</a>. Platform/version availability differs; the intelligence reference does not establish every Mac feature in every release.</p>
+<h2 id="where-this-implementation-may-be-preferable">Where this implementation may be preferable</h2>
+<ul>
+<li>A Swift developer wants to alter an action's behavior and write regression tests.</li>
+<li>A project needs its own data/action contract with explicit budgets and predictable storage commits.</li>
+<li>A maintainer wants guided generation tied to a catalog they control and can inspect.</li>
+<li>A future owner wants a narrowly authorized Android controller with explicit device/workflow grants.</li>
+</ul>
+<p>Those are suitability arguments from the architecture, not measured wins. A user wanting broad Apple integrations, automatic device sync and polished system extensions will have reasons to prefer Apple's product today.</p>
+<h2 id="how-to-establish-an-actual-advantage">How to establish an actual advantage</h2>
+<p>Use identical tasks and data, with Apple-only actions labeled delegated. Include pure pipelines, nested blocks, external apps/URLs, HTTP/files, import/recovery, unavailable permissions and model failures. Measure completion/correction effort, failure/recovery rate, latency distributions, memory/energy, accessibility task success and ongoing maintenance. Use independent fixtures and real users; publish OS/build/model availability and sample sizes.</p>
+<p>Do not count two arithmetic/draft checks as general reasoning superiority. Do not count successful launch callbacks as verified webpage load. Do not claim NPU-only execution, total privacy, or cloud cost savings from selecting an on-device API. The present honest claim is: <strong>a working, inspectable macOS workflow implementation with tested local examples and a documented extension path</strong>.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

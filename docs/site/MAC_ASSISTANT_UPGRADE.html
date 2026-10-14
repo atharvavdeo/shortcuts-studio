@@ -1,0 +1,85 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Mac assistant, files, power and remote access — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="mac-assistant-files-power-and-remote-access">Mac assistant, files, power and remote access</h1>
+<h2 id="version-050">Version 0.5.0</h2>
+<p>Implemented: explicit folder listing/opening, bounded UTF-8 file previews, a semantic New Chat/New Task action, Google visible results, Weather visible results, Studio model on/off commands, Low Power Mode/thermal inference gates, and reduced idle polling. Actual native app adapters still require App Control permission and readable accessibility controls. A build is not proof of successful Codex/Weather interaction.</p>
+<h2 id="first-use">First use</h2>
+<ol>
+<li>Open Phone Messenger in the updated Mac app.</li>
+<li>Choose <strong>Simplify &amp; Enable Codex/Weather</strong>. Unmodified counter/JSON/list demos move to recoverable Trash. The old Google launch-only workflow also moves to Trash. Edited demo workflows are preserved; use normal Trash controls for those. Phone Assistant gains Codex and Weather in its application list, invalidating its old revision grant.</li>
+<li>Check Phone · Assistant again to approve that revision. Other paired-device credentials are preserved.</li>
+<li>Under <strong>Approved folders for phone reading</strong>, choose <strong>Approve Folder…</strong>. This grants paired assistant commands read access to that folder and its children. macOS file privacy permission may still be needed. Remove a folder here to revoke future access; previously delivered results remain in the phone's inbox.</li>
+<li>Refresh Android Chrome. Choose Assistant and enter a command below.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model off</code></td>
+<td>Disable Studio's inference; explicit tools remain usable</td>
+</tr>
+<tr>
+<td><code>model on</code></td>
+<td>Allow inference on demand, subject to availability/power/thermal checks</td>
+</tr>
+<tr>
+<td><code>model status</code></td>
+<td>Return Studio's setting and Apple model readiness</td>
+</tr>
+<tr>
+<td><code>list folder Desktop</code></td>
+<td>Actual visible entries in an allowed folder</td>
+</tr>
+<tr>
+<td><code>open folder Desktop/My Folder</code></td>
+<td>Open the folder in Finder and return entries</td>
+</tr>
+<tr>
+<td><code>read file Desktop/My Folder/note.md</code></td>
+<td>Actual UTF-8 text preview</td>
+</tr>
+<tr>
+<td><code>new chat in Codex</code></td>
+<td>Press an exposed exact New Chat/New Task control, then return visible app text</td>
+</tr>
+<tr>
+<td><code>Google &lt;query&gt;</code></td>
+<td>Open Chrome, verify the search document URL/query and return visible results</td>
+</tr>
+<tr>
+<td><code>check the weather</code></td>
+<td>Open Weather and return its currently displayed location/conditions</td>
+</tr>
+<tr>
+<td><code>In ChatGPT: &lt;prompt&gt;</code></td>
+<td>Submit into an empty approved compose field and return changing visible app text</td>
+</tr>
+</tbody>
+</table>
+<p>Natural phrasing can be classified by Apple's model when enabled. Commands preserve explicit paths and app targets. The model is not an OS permission grant or an unrestricted computer-use agent. The current planner chooses one task per request; it does not yet execute arbitrary multi-step plans. App text is tool output, not instructions to perform further actions.</p>
+<h2 id="file-limits">File limits</h2>
+<ul>
+<li>A file/folder must resolve inside an explicitly approved root (or Desktop when the workflow permits it). Canonical path boundaries reject <code>..</code>, symlink escapes and sibling-prefix tricks.</li>
+<li>Listings skip hidden entries and show at most 200 names. Opening folders does not change their contents.</li>
+<li>Reading supports regular <code>.txt</code>, <code>.md</code>, <code>.csv</code>, <code>.json</code>, <code>.log</code>, <code>.swift</code>, <code>.py</code>, <code>.js</code>, <code>.ts</code>, <code>.html</code>, <code>.css</code>, <code>.yaml</code>, <code>.yml</code>, and <code>.xml</code> files. Maximum preview is 24 KiB; the transport's existing 12 KiB result bound can truncate it further, with a marker.</li>
+<li>No recursive bulk extraction, PDF/Office/image parsing, file mutations, or shell execution. Files are returned to the paired phone; file contents are not automatically sent to ChatGPT or another cloud service.</li>
+</ul>
+<h2 id="what-the-power-controls-do">What the power controls do</h2>
+<p>Studio explicitly uses <code>SystemLanguageModel.default</code>. It creates sessions only to classify non-explicit requests, answer questions, or draft workflows; there is no idle inference loop or model prewarming. Sessions are not retained across commands. Turning off Studio inference blocks new model requests and checks the gate again during streamed answers. It does not switch off Apple Intelligence system-wide or control Apple's OS-managed model residency.</p>
+<p>Mac Low Power Mode pauses Studio inference. Serious/critical thermal states also pause it. Explicit file/open/list/model-setting commands continue. Use the phone Stop action to cancel an active workflow before sending another command; only one run can execute at once. Idle connector polling changed from once per second to once per four seconds; active runs retain one-second delivery checks.</p>
+<p>There is no measured battery/temperature guarantee. The tunnel, relay, app, network wakeups and requested tasks still consume power. An asleep/shut-down Mac cannot execute commands. A powered, awake Mac at home with its display off is the intended remote-use setup. Studio does not silently prevent sleep or change macOS energy settings. Public Foundation Models availability remains a real requirement: <a href="https://developer.apple.com/documentation/FoundationModels/generating-content-and-performing-tasks-with-foundation-models">Apple documentation</a>.</p>
+<h2 id="permanent-connection">Permanent connection</h2>
+<p>Pairing is remembered; the phone and Mac do not need to stay physically together or share Wi-Fi after pairing. The current Quick Tunnel URL lasts only for that tunnel instance and can change on restart: <a href="https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/">Cloudflare Quick Tunnels</a>.</p>
+<p>A named Cloudflare Tunnel with a configured HTTPS hostname is the smallest upgrade for the existing Node relay. Use the owner account to create a named tunnel and route the hostname to <code>http://127.0.0.1:8787</code>. Keep its token in a private file; never put it in phone code or documentation. The launcher now supports this mode:</p>
+<pre><code class="language-bash">STUDIO_GATEWAY_ORIGIN=https://your-owned-hostname.example \
+STUDIO_TUNNEL_TOKEN_FILE=/absolute/private/path/tunnel-token \
+bash scripts/start-messenger.sh
+</code></pre>
+<p>This configures an existing named tunnel, not automatic account/resource provisioning. Do not start a second relay against the same runtime directory/port. Stop the temporary relay/tunnel deliberately when migrating. A different origin requires initial phone pairing again because browser credentials are origin-scoped. Once paired to the stable hostname, routine tunnel reconnection uses the same link. An independently hosted durable relay is now implemented and deployed; see <a href="HOSTED_GATEWAY.html">Hosted gateway</a>.</p>
+<p>SMS is not implemented. An SMS transport would need a service/provider and account, and its message body must not directly authorize Mac execution; it would still need authenticated pairing and replay protection. It does not remove the requirement for a reachable Mac. The HTTPS messenger already returns encrypted results and push alerts across different networks.</p>
+<h2 id="evidence-and-remaining-work">Evidence and remaining work</h2>
+<p>The assistant validation covers actual file content/listings, canonical boundaries, explicit parsing, model toggles, file use with AI disabled, rejection of disabled inference, and a live Apple model answer/stream. Store, encrypted messenger and distribution checks remain separate evidence.</p>
+<p>Native Codex New Chat, Chrome search extraction and Weather results require a live, OS-authorized app check. Button discovery is bounded and exact; inaccessible controls return an error without guessing a keyboard shortcut. Returned Weather text is the app's selected location, not an invented answer for an arbitrary requested city. General app navigation, multi-step planning, structured search/weather adapters, sleep recovery and measured energy profiling remain work.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

@@ -1,0 +1,11 @@
+.build/
+dist/
+.DS_Store
+.gateway-runtime/
+node_modules/
+
+.wrangler/
+.dev.vars*
+*.log
+verification/build-manifest.json
+verification/distribution-validation.json

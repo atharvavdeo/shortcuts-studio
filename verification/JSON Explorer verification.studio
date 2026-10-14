@@ -1,0 +1,45 @@
+{
+  "format" : "studio.shortcut",
+  "version" : 1,
+  "workflow" : {
+    "actions" : [
+      {
+        "id" : "913DBF49-4AAD-4376-B129-3F5B4EA42854",
+        "isEnabled" : true,
+        "kind" : "dictionary",
+        "parameters" : {
+          "json" : "{\"name\":\"World\"}"
+        }
+      },
+      {
+        "id" : "EAE56AED-EF8E-42C6-A2D9-A13442375212",
+        "isEnabled" : true,
+        "kind" : "getValue",
+        "parameters" : {
+          "input" : "{{previous}}",
+          "key" : "name"
+        }
+      },
+      {
+        "id" : "FD05F7DA-C6E1-447D-BAE1-E967AA13F4F2",
+        "isEnabled" : true,
+        "kind" : "show",
+        "parameters" : {
+          "input" : "{{previous}}"
+        }
+      }
+    ],
+    "color" : "pink",
+    "id" : "4F999593-E0B3-48F2-B2D9-EDD49DD46E24",
+    "isFavorite" : false,
+    "name" : "JSON Explorer",
+    "questions" : [
+
+    ],
+    "storage" : {
+
+    },
+    "symbol" : "curlybraces",
+    "updatedAt" : 813578712.677336
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "format": "studio.shortcut",
+  "version": 1,
+  "workflow": {
+    "id": "7F97D360-3266-49AF-9B9E-0B92815F37E3",
+    "name": "Google Search in Chrome",
+    "symbol": "globe",
+    "color": "blue",
+    "actions": [
+      {
+        "id": "809D5BA3-5B24-4810-B5B5-BE1B3BE87FC1",
+        "kind": "openApp",
+        "parameters": {
+          "bundle": "com.google.Chrome"
+        },
+        "isEnabled": true
+      },
+      {
+        "id": "E051C825-4589-4696-9E0D-91B3330DA6EA",
+        "kind": "url",
+        "parameters": {
+          "url": "https://www.google.com/search?q=Apple+Foundation+Models+Swift"
+        },
+        "isEnabled": true
+      },
+      {
+        "id": "D9DF33BF-0B78-4BAE-AFD8-01073C3096E2",
+        "kind": "openURL",
+        "parameters": {
+          "input": "{{previous}}",
+          "bundle": "com.google.Chrome"
+        },
+        "isEnabled": true
+      }
+    ],
+    "storage": {},
+    "questions": [],
+    "isFavorite": false,
+    "updatedAt": 813593874.4706099
+  }
+}

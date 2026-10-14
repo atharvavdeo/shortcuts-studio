@@ -1,0 +1,8 @@
+PASS prepared input reaches runtime
+PASS inputs are isolated by shortcut
+PASS switching back restores session input
+PASS empty configured input remains Text
+PASS automation editing preserves identity and disabled state
+PASS edited automation persists across reload
+PASS invalid schedule update fails without publishing
+STORE VALIDATION PASS

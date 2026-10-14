@@ -1,0 +1,145 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Developer guide — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="developer-guide">Developer guide</h1>
+<h2 id="prerequisites-and-checkout">Prerequisites and checkout</h2>
+<p>The source tree is a Swift package. Use macOS with a toolchain that includes SwiftUI/AppKit and the Foundation Models SDK, currently the Swift 6.4 / macOS 27 Command Line Tools installation used here. The package language declaration is Swift tools 5.10; that alone does not provide a recent SDK. Full Xcode is recommended for distribution, accessibility tooling, Instruments, and layered icon work. The executable deployment target is macOS 14, with model calls gated at macOS 26.</p>
+<p>No remote Git repository is configured. Work from the source ZIP or this directory. A public source license has not been selected; do not infer an MIT license from the use of Swift or from the REA research reference.</p>
+<pre><code class="language-sh">cd ShortcutStudio
+bash scripts/test.sh
+bash scripts/validate-store.sh
+bash scripts/validate-model.sh
+swift run --package-path examples/EngineClient
+bash scripts/generate-reference.sh
+python3 scripts/render-handbook.py
+bash scripts/build-app.sh release
+python3 scripts/validate-distribution.py
+</code></pre>
+<p>Model validation requires an available on-device model; it actually performs inference. The other validation commands use synthetic inputs and isolated storage. Default packaging signs locally and does not upload or notarize anything.</p>
+<h2 id="source-map">Source map</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Sources/WorkflowCore/Models.swift</code></td>
+<td>Typed values, actions, workflows, import questions, folders, automations, run records, library/export envelopes</td>
+</tr>
+<tr>
+<td><code>Catalog.swift</code></td>
+<td>64 definitions, editor defaults, choices, symbols, categories, and starter workflows</td>
+</tr>
+<tr>
+<td><code>Engine.swift</code></td>
+<td>MainActor host protocol, structural validator, reference resolution, bounded interpreter, core actions</td>
+</tr>
+<tr>
+<td><code>WorkflowEdits.swift</code></td>
+<td>Whole-block movement/duplication/removal, identity/reference/question remapping</td>
+</tr>
+<tr>
+<td><code>Persistence.swift</code></td>
+<td>Version/ID/schedule checks, atomic library save/backup, recovery and workflow import/export</td>
+</tr>
+<tr>
+<td><code>AutomationSchedule.swift</code></td>
+<td>Pure calendar/time-window/weekday/claimed-day decision</td>
+</tr>
+<tr>
+<td><code>ModelDraft.swift</code></td>
+<td>Untrusted model draft decoding and validation</td>
+</tr>
+<tr>
+<td><code>Sources/ShortcutStudio/StudioStore.swift</code></td>
+<td>Observable app state, mutation/undo, session inputs, run lifecycle, native actions, automations, imports, Apple library</td>
+</tr>
+<tr>
+<td><code>StudioApp.swift</code></td>
+<td>Scene/menus, sidebar, library/editor/inspectors/gallery/history, model draft sheet</td>
+</tr>
+<tr>
+<td><code>AutomationView.swift</code></td>
+<td>Presets, creation/editing form, weekday controls, rule list</td>
+</tr>
+<tr>
+<td><code>OnDeviceIntelligence.swift</code></td>
+<td>Availability, fresh model sessions, streamed text and two-pass guided authoring</td>
+</tr>
+<tr>
+<td><code>ProcessRunner.swift</code></td>
+<td>Argument-safe child process, cancellation, timeout, temporary output capture</td>
+</tr>
+<tr>
+<td><code>scripts/</code></td>
+<td>Tests, probes, generated references, handbook rendering, packaging, signing, artifact validation</td>
+</tr>
+<tr>
+<td><code>verification/</code></td>
+<td>Dated synthetic logs, fixtures and build provenance; never the user's real library</td>
+</tr>
+</tbody>
+</table>
+<h2 id="use-the-public-swift-library">Use the public Swift library</h2>
+<p>The package exports <strong>WorkflowCore</strong> as a library product. A neighboring Swift package can depend on the local checkout:</p>
+<pre><code class="language-swift">// In the client's Package.swift:
+dependencies: [.package(path: &quot;../ShortcutStudio&quot;)]
+// In a target's dependencies:
+.product(name: &quot;WorkflowCore&quot;, package: &quot;shortcutstudio&quot;)
+</code></pre>
+<p>Import <code>WorkflowCore</code>, instantiate a host, build a <code>Workflow</code>, validate, and call <code>WorkflowEngine.run</code>. The complete executable example is in <code>examples/EngineClient</code>; its own package path is <code>../..</code> because it lives inside this checkout. It checks the exact <code>HELLO, WORLD!</code> result. See <a href="SWIFT_API_REFERENCE.html">Swift API reference</a>.</p>
+<p><code>WorkflowEngine</code> holds its host <strong>unowned</strong>. Keep the host alive for the entire run. The engine and host protocol are MainActor isolated. Use a fresh engine per run or serialize access; its mutable step counter is not a concurrency scheduler. The app store itself permits only one active workflow. <code>WorkflowCore</code> currently targets the Apple/macOS toolchain; this is not an Android library binary.</p>
+<h2 id="follow-the-data-path">Follow the data path</h2>
+<ol>
+<li>The editor obtains <code>definition.action</code>, which fills parameter defaults.</li>
+<li>The store mutates a selected workflow, records authoring undo where appropriate, and saves.</li>
+<li>Run snapshots the workflow and input, clears authoring undo, creates a task and engine.</li>
+<li>Structural validation rejects unknown kinds, duplicate IDs, mismatched markers, disabled markers, and deep nesting.</li>
+<li>Parameters are resolved just before each action. An exact reference retains a typed value; interpolation yields text.</li>
+<li>Core actions execute in the interpreter. Host actions call <code>WorkflowHost.perform</code> with resolved parameters and the selected input.</li>
+<li>Host storage persistence must succeed before the interpreter updates committed state.</li>
+<li>Step callbacks update live output/progress. Run completion inserts a bounded history record and saves.</li>
+</ol>
+<p>The interpreter's control logic is deterministic; Date, Random, network responses, system apps, and models naturally have variable outputs. Validation of structure is not full validation of every parameter or future external effect.</p>
+<h2 id="add-a-core-action">Add a core action</h2>
+<p>This is an edit to the implementation, not runtime plugin registration. The catalog is static.</p>
+<ol>
+<li>Choose a stable, unique <code>kind</code>; changing it breaks saved workflows unless you migrate them.</li>
+<li>Add an <code>ActionDefinition</code> through Catalog's local <code>d</code> helper, with keys, defaults, choices, category, symbol and honest capability description.</li>
+<li>Implement the kind in <code>WorkflowEngine.perform</code> for pure/data operations. Use resolved <code>WorkflowValue</code>; reject invalid numeric/range/type input clearly.</li>
+<li>If it opens apps, asks permissions, interacts with files/UI, or uses a platform service, implement it in the macOS host instead.</li>
+<li>Add positive, malformed-input, cancellation, persistence and side-effect tests as applicable. Test block/reference behavior if relevant.</li>
+<li>Regenerate reference files and the handbook. Update privacy/API inventory and the standards audit.</li>
+<li>Check model drafting: it derives its action-plan enum and per-step parameter schemas from the catalog, so new actions are exposed to generation automatically.</li>
+</ol>
+<p>Illustrative insertion for a new pure text action:</p>
+<pre><code class="language-swift">// Catalog definition (inside its definitions closure):
+d(&quot;reverseText&quot;, &quot;Reverse Text&quot;, &quot;Text&quot;, &quot;textformat&quot;, &quot;Reverse text by Character.&quot;, [input])
+// Engine switch (where helper s resolves parameter text):
+case &quot;reverseText&quot;: return .text(String(s(&quot;input&quot;).reversed()))
+</code></pre>
+<p>Those fragments require insertion into their named scopes; they are not an already-registered action. A test should use <code>{{previous}}</code> from a Text action and verify Unicode Character behavior. Avoid arbitrary evaluation of model-produced code.</p>
+<h2 id="add-a-platform-action">Add a platform action</h2>
+<p>Register it in the catalog and handle it in <code>StudioStore.perform</code>. <code>try Task.checkCancellation()</code> runs before host dispatch; cooperative loops need further cancellation checks. Native sheets must have a valid parent. An OS error should fail the action, not silently pass input as if it succeeded. Request only the service's required permission when the user invokes the capability; a usage-description key is an explanation, not authorization.</p>
+<p>Do not add global ATS exemptions, broad sandbox exceptions, shell interpolation, private frameworks, or unused entitlements to make a feature appear to work. Update the action's capability/permission notes and verify on actual hardware. If a capability needs a target/extension or signing entitlement, specify that dependency explicitly.</p>
+<h2 id="persistence-format-and-migrations">Persistence, format and migrations</h2>
+<p><code>LibraryDocument.schemaVersion == 1</code> and <code>WorkflowFile(format: "studio.shortcut", version: 1)</code> are separate envelopes. Swift's synthesized Codable representation of <code>WorkflowValue</code> is a <strong>tagged enum</strong>, not the raw JSON produced by <code>jsonText</code>. <a href="workflow-value-encoding.json">Encoding examples</a> are generated from actual code. Keep this distinction when writing a parser in Kotlin or another language.</p>
+<p>The current library model's optional <code>weekdays</code> lets older automation documents decode without a migration. Adding a nonoptional field with a Swift default does not necessarily make synthesized decoding tolerate its absence; test old fixtures. A new format requires explicit version support/migration, preservation of original bytes, and rejected unsupported versions. Never rotate corrupt bytes into the last valid backup.</p>
+<p>Imported workflows get a new workflow/action/question identity map. Runtime storage may be included in exports. Do not include user library/history in source ZIPs, issues, model fixtures, or build artifacts.</p>
+<h2 id="extend-automation">Extend automation</h2>
+<p>Pure time eligibility belongs in <code>AutomationSchedule</code>. OS observers belong in the macOS host; configuration belongs in <code>AutomationView</code>. Maintain claim-before-run persistence, one-run serialization, busy behavior, cooldowns, weekday/time-zone semantics and missing/deleted workflow handling.</p>
+<p>A browser URL visit is <strong>not</strong> an app activation. Such a trigger would need a deliberate browser integration and permissions plus host/authentication tests. A background/login service would need its own lifecycle, ownership and platform-policy work; the current timer is not that service.</p>
+<h2 id="extend-intelligence">Extend intelligence</h2>
+<p>Keep explicit model selection, availability checks and cancellation. Current text streaming uses cumulative snapshots. Draft generation makes two fresh sessions: a catalog action plan and per-step schema filling. Never execute a draft during generation. Validate it, display it, and require explicit acceptance and Run. Do not infer context size, model weights or processor placement from the API name.</p>
+<p>Model text is untrusted. Guided generation constrains shape; it cannot certify semantic correctness. Check examples against requested kinds and expected outputs, not just decodable JSON. Limit response/prompt size and document errors rather than introducing hidden cloud fallback.</p>
+<h2 id="test-and-release-discipline">Test and release discipline</h2>
+<ul>
+<li>The core test suite is Swift Testing, with explicit CLT macro plugin registration when necessary.</li>
+<li>Store validation compiles the actual app store into an isolated synthetic harness.</li>
+<li>Model validation compiles the actual core/service and checks live streams, drafts and cancellation.</li>
+<li>Native UI observations cover prompts, import/export, input, model generation and actual app/browser effects.</li>
+<li>Packaging validates bundle metadata, handbook freshness, catalog coverage, contrast arithmetic, privacy declaration, signature and archives. It cannot certify HIG compliance or App Review.</li>
+</ul>
+<p>Use small synthetic fixtures. Preserve logs and exact build hashes. See <a href="RELEASE_GUIDE.html">Release guide</a> for public distribution gates and <a href="APPLE_STANDARDS_AUDIT.html">Apple standards audit</a> for manual design/accessibility checks.</p>
+<h2 id="messenger-extension">Messenger extension</h2>
+<p>The 0.3.0 browser companion connects through a separate Node messenger and outbound Mac polling actor. See <a href="MESSENGER_GUIDE.html">Messenger guide</a> for setup, crypto formats, authorization, lifecycle and limits. <code>StudioStore.run</code> now returns Bool and optionally accepts <code>remotely</code> and a completion callback. The messenger journals acceptance before invoking it and rejects unsupported capabilities. <code>MessengerConnector</code> accepts an optional credential-access closure for isolated tests; the default production path is Keychain. Never replace the default with a plaintext credential store in a distributed app.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

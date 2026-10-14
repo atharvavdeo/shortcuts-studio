@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>How the system was constructed — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="how-the-system-was-constructed">How the system was constructed</h1>
+<p>This is a reproducible engineering record of the current macOS application. It is a functional recreation of an authoring/runtime pattern using public APIs, not a claim that Apple's private implementation, model weights, or complete catalog were reconstructed.</p>
+<h2 id="starting-point-and-research">Starting point and research</h2>
+<p>The project began with REA references and investigation of Shortcuts, Pages, Keynote, Numbers, and Image Playground. Research dossiers live in the workspace's sibling <code>research/</code> directory. They document capability boundaries and evidence separately from this app. They are not dependencies or proof that those applications were reimplemented.</p>
+<p>The implementation uses Swift, SwiftUI, AppKit, Foundation, and public Foundation Models APIs. REA and private Apple frameworks are not linked. Reading an installed SDK interface established available declarations; no SDK file was modified. The app has its own name, workflow-node icon, library, portable file type, and interpreter.</p>
+<h2 id="architecture">Architecture</h2>
+<figure class="diagram"><img src="assets/system-architecture.svg" alt="System Construction overview"/><figcaption>Rendered overview; editable Mermaid source is in the chapter Markdown.</figcaption></figure><details class="diagram"><summary>Editable diagram source</summary><pre><code>flowchart TD
+    Scene[SwiftUI scene and menus] --&gt; Workspace[Library, editor, inspectors and forms]
+    Workspace --&gt; Store[MainActor StudioStore]
+    Store --&gt; Repository[Atomic JSON library and backup]
+    Store --&gt; Engine[WorkflowCore interpreter]
+    Engine --&gt; Core[Typed data and control-flow actions]
+    Engine --&gt; Host[WorkflowHost macOS adapter]
+    Host --&gt; OS[AppKit, files, clipboard, speech and notifications]
+    Host --&gt; Model[Foundation Models on-device session]
+    Host --&gt; CLI[Apple shortcuts CLI]
+    Events[Calendar and workspace events] --&gt; Store
+    Docs[Bundled handbook] --&gt; Scene
+</code></pre></details>
+<h2 id="implemented-construction-sequence">Implemented construction sequence</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What was built</th>
+<th>Evidence / limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Research</td>
+<td>Public capabilities, APIs, format and permission boundaries</td>
+<td>Dossiers and primary references; not full private-engine equivalence</td>
+</tr>
+<tr>
+<td>Models</td>
+<td>Value enum, action IDs, workflows, export/library envelopes</td>
+<td>Codable round trips and fixtures; tagged enum storage</td>
+</tr>
+<tr>
+<td>Interpreter</td>
+<td>References, If/Repeat blocks, budgets, nested workflow calls</td>
+<td>Named core tests; some synchronous work remains on MainActor</td>
+</tr>
+<tr>
+<td>Catalog</td>
+<td>64 definitions, forms, choices, defaults, starter workflows</td>
+<td>Generated action reference and JSON inventory</td>
+</tr>
+<tr>
+<td>Authoring</td>
+<td>Native library/editor, inspectors, atomic block edits, undo, trash</td>
+<td>UI observations and block/reference tests</td>
+</tr>
+<tr>
+<td>Persistence</td>
+<td>Atomic writes, previous-valid backup, preserved corrupt files</td>
+<td>Corruption/import/version/schedule tests</td>
+</tr>
+<tr>
+<td>macOS host</td>
+<td>Dialogs, app/URL opening, clipboard, files, speech, notifications</td>
+<td>Real examples and selected UI tests; not every permission path tested</td>
+</tr>
+<tr>
+<td>Apple bridge</td>
+<td>Discovery/editor/run via public CLI, typed/bounded output</td>
+<td>Isolated text-only Apple fixture passed</td>
+</tr>
+<tr>
+<td>Automation</td>
+<td>Daily/weekday schedule, app activation/quitting, wake/sleep, clipboard</td>
+<td>Pure schedule checks and real quit event; no unattended daemon</td>
+</tr>
+<tr>
+<td>Intelligence</td>
+<td>Availability, streamed text, guided two-pass drafts</td>
+<td>Live inference, exact-output fixtures, UI acceptance/run, cancellation</td>
+</tr>
+<tr>
+<td>UI acceptance</td>
+<td>Multiline input, keyboard Run, progress, preview, editor state isolation</td>
+<td>Native observations and isolated store checks</td>
+</tr>
+<tr>
+<td>Standards pass</td>
+<td>Button-based cards, accessible labels, menu parity, contrast palette, formal UTI, privacy/help bundle, distinct icon, compact layout</td>
+<td>Local implementation and packaging checks; remaining audit gates documented</td>
+</tr>
+<tr>
+<td>Android messenger</td>
+<td>Browser client, authenticated test relay, Mac grants, encryption and inbox implemented</td>
+<td>Native APK and permanent hosting remain future work</td>
+</tr>
+</tbody>
+</table>
+<h2 id="runtime-sequence">Runtime sequence</h2>
+<details class="diagram"><summary>Editable diagram source</summary><pre><code>sequenceDiagram
+    participant User
+    participant UI
+    participant Store
+    participant Engine
+    participant Host
+    participant Disk
+    User-&gt;&gt;UI: Run selected workflow and optional text
+    UI-&gt;&gt;Store: runSelected()
+    Store-&gt;&gt;Store: guard busy/import/model/save state
+    Store-&gt;&gt;Engine: run(snapshot, input)
+    Engine-&gt;&gt;Engine: validate and resolve current action
+    Engine-&gt;&gt;Host: platform action or storage commit
+    Host-&gt;&gt;Disk: durable storage write when required
+    Host--&gt;&gt;Engine: typed output or error
+    Engine--&gt;&gt;Store: step callbacks and final output
+    Store-&gt;&gt;Disk: bounded history/library save
+    Store--&gt;&gt;UI: completion, cancellation or failure
+</code></pre></details>
+<p>Cancellation is cooperative and side effects are not transactional. Persisting storage or opening an application can precede a later cancellation. In contrast, a failed storage commit fails the action before its value is treated as committed.</p>
+<h2 id="format-lineage">Format lineage</h2>
+<ul>
+<li><code>LibraryDocument.schemaVersion</code>: 1, including workflows/folders/rules/history.</li>
+<li><code>.studio</code> export format: <code>studio.shortcut</code>, version 1, containing one workflow.</li>
+<li>Document UTI: <code>tools.shortcutstudio.workflow</code>, conforming to <code>public.json</code>.</li>
+<li>Native Apple file formats remain owned/handled by Apple.</li>
+<li>The proposed Android wire protocol is a new versioned contract, not a serialized library database or raw Swift enum.</li>
+</ul>
+<h2 id="design-decisions">Design decisions</h2>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Reason</th>
+<th>Cost / consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SwiftUI + AppKit</td>
+<td>Native Mac controls, lifecycle, sheets and system actions</td>
+<td>Apple-platform host and SDK dependency</td>
+</tr>
+<tr>
+<td>Independent WorkflowCore</td>
+<td>Inspectable behavior, source extension and tests</td>
+<td>Limited catalog and custom coercion semantics</td>
+</tr>
+<tr>
+<td>MainActor engine/host</td>
+<td>Simple UI/platform coordination and one-run ownership</td>
+<td>Regex/large synchronous work can block UI; future worker separation needed</td>
+</tr>
+<tr>
+<td>Explicit budgets</td>
+<td>Bound loops, calls, steps and input/output sizes</td>
+<td>Some legitimate long workflows are rejected</td>
+</tr>
+<tr>
+<td>Own JSON envelope</td>
+<td>Human-readable, versioned workflows and development fixtures</td>
+<td>No Apple signed-format interchange</td>
+</tr>
+<tr>
+<td>Public <code>shortcuts</code> CLI</td>
+<td>Reuse installed Apple capabilities without private APIs</td>
+<td>Delegated permission/execution/cancellation boundaries</td>
+</tr>
+<tr>
+<td>Immediate storage commits</td>
+<td>A successful write has explicit durable semantics</td>
+<td>Undo/cancellation cannot rewind runtime effects</td>
+</tr>
+<tr>
+<td>Local model only</td>
+<td>Explicit on-device execution path and availability</td>
+<td>Eligibility/context/safety/accuracy limits; no hidden cloud rescue</td>
+</tr>
+<tr>
+<td>Two-pass model drafting</td>
+<td>Action-specific parameter schemas reduce malformed output</td>
+<td>More inference work, bounded pipeline expressiveness, still needs review</td>
+</tr>
+<tr>
+<td>App-open automation</td>
+<td>No unexpected service installation or privileges</td>
+<td>No execution when Studio is quit/asleep; busy triggers skipped</td>
+</tr>
+<tr>
+<td>Independent branding</td>
+<td>Clear ownership and distinction from Apple's app</td>
+<td>Original icon and product positioning need ongoing design review</td>
+</tr>
+<tr>
+<td>Internet messenger gateway</td>
+<td>Owner selected commands across networks, approved Mac workflows and result notifications</td>
+<td>Outbound Mac connector, relay operations, pairing, privacy and phone lifecycle require implementation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="faults-found-and-repaired">Faults found and repaired</h2>
+<ul>
+<li>Native result sheets initially failed when the main window was unavailable; parent resolution was expanded.</li>
+<li>Loop branch outputs could become stale across iterations; per-iteration output identities are cleared and context restored.</li>
+<li>Arithmetic and rounding overflow are rejected explicitly.</li>
+<li>Corrupt data is preserved and cannot silently replace the last known-good backup.</li>
+<li>Authoring undo could rewind runtime state; run start clears undo snapshots.</li>
+<li>AI drafts invented references, shortened literal values, or reused original input. Strict reference checks, per-action schemas and guided pipeline wiring were added.</li>
+<li>Preset forms captured initial state incorrectly; configuration moved into its own initialized view.</li>
+<li>Keyboard Run originally bypassed editor input; the store now owns per-workflow input and one shared runSelected path.</li>
+<li>Output from another selected workflow was misleading; output/logs are selection-scoped.</li>
+<li>Native sheet sizing collapsed the generated action preview; fixed height and width were added and visually checked.</li>
+<li>Library selection originally used tap gestures; native buttons now support keyboard activation.</li>
+</ul>
+<p>These fixes are supported by source, named tests, or UI observations. They are not evidence of every possible crash/error path being absent.</p>
+<h2 id="rebuild-the-entire-local-deliverable">Rebuild the entire local deliverable</h2>
+<p>Run core/store/model checks, the external Swift example, reference generation, handbook rendering, packaging and artifact validation. The release script bundles the executable, icon, Info.plist, privacy declaration and offline handbook, signs with hardened runtime, creates app/source ZIPs and checksum/provenance files. No user's application-support library or credentials are packaged.</p>
+<p>Current limitations and public distribution gates are in <a href="APPLE_STANDARDS_AUDIT.html">Apple standards audit</a>. The path from Android is in <a href="ANDROID_SCOPE.html">Android scope</a>. <a href="COMPARISON.html">Comparison</a> identifies where engineering control may be useful without overstating superiority.</p>
+<h2 id="messenger-implementation-020">Messenger implementation, 0.2.0</h2>
+<p>The owner chose internet command delivery and approved Mac workflows with AI only when needed, then approved a Chrome phone companion for the first test. The implementation adds a separate Node relay, mobile web UI, Web Push service worker, Swift CryptoKit/Keychain connector and a native pairing/grant sheet. It reuses the existing interpreter through an explicit run callback. A bounded allowlist excludes private reads and interactive/delegated/nested actions; Show Result becomes a phone result. An isolated integration harness checks the actual connector and Web Crypto client against a separate test relay and temporary library, avoiding user keys and workflows. See <a href="MESSENGER_GUIDE.html">Messenger guide</a>.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

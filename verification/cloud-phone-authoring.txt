@@ -1,0 +1,24 @@
+PASS remote allowlist uses real action kinds
+PASS blocked capability clipboard
+PASS blocked capability runWorkflow
+PASS blocked capability readFile
+PASS blocked capability http
+PASS stored references blocked
+PASS restart marks unknown outcome interrupted
+PASS editing invalidates grant
+PASS WebCrypto ↔ Swift CryptoKit command/result and dialog-free Show
+PASS phone request cannot inject app permissions
+PASS encrypted phone creation, durable save, load, edit, duplicate save and execution
+PASS duplicate retrieves original terminal run
+PASS rejects revision changed
+PASS rejects unknown inner key
+PASS rejects ciphertext forged
+PASS rejects oversized input
+PASS phone save/edit persists one ordered shortcut
+PASS authored shortcut inherits approved scope
+PASS revoking parent disables authored shortcuts
+PASS commands and streams use session keys without repeated credential reads
+PASS duplicate command executed once in fixture
+PASS cancellation prevents later action
+PASS owned cancellation round trip
+MESSENGER VALIDATION PASS

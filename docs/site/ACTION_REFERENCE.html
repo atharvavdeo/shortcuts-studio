@@ -1,0 +1,1538 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Action reference — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="action-reference">Action reference</h1>
+<p>Generated from <code>ActionCatalog.definitions</code>. Regenerate with <code>bash scripts/generate-reference.sh</code>. This is the current catalog, not Apple’s full action catalog.</p>
+<p>67 action definitions. Parameter values are authored as strings and resolved by the interpreter. Omitted values may differ from editor defaults when constructing an action manually: use <code>definition.action</code> to start with defaults.</p>
+<h2 id="use-on-device-model-ondevicemodel">Use On-Device Model (<code>onDeviceModel</code>)</h2>
+<p>Category: Intelligence.</p>
+<p>Stream text from Apple’s on-device Foundation Model. Requires available Apple Intelligence; no cloud fallback.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prompt</code></td>
+<td>Prompt</td>
+<td><code>Summarize: {{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>instructions</code></td>
+<td>Instructions</td>
+<td><code>Be concise and accurate.</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="phone-assistant-phoneassistant">Phone Assistant (<code>phoneAssistant</code>)</h2>
+<p>Category: Intelligence.</p>
+<p>Route a phone command through Apple on-device intelligence to approved Mac tasks or an answer. App control requires Accessibility permission.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prompt</code></td>
+<td>Command or question</td>
+<td><code>{{input}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>applications</code></td>
+<td>Approved application bundle IDs</td>
+<td><code>com.openai.codex,com.openai.chat,com.google.Chrome,com.subframe.desktop,com.apple.finder,com.apple.calculator,com.apple.weather</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>desktop</code></td>
+<td>Allow Desktop filenames</td>
+<td><code>true</code></td>
+<td>true, false</td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-desktop-file-names-desktopnames">Get Desktop File Names (<code>desktopNames</code>)</h2>
+<p>Category: Mac.</p>
+<p>List visible Desktop filenames, up to 200 entries; no file contents or arbitrary paths.</p>
+<p>No parameters.</p>
+<h2 id="control-application-appcontrol">Control Application (<code>appControl</code>)</h2>
+<p>Category: Mac.</p>
+<p>Open, inspect, type into, or submit text to the configured app using public Accessibility APIs.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bundle</code></td>
+<td>Application bundle ID</td>
+<td><code>com.openai.chat</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>operation</code></td>
+<td>Operation</td>
+<td><code>inspect</code></td>
+<td>open, inspect, type, send</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td>Text</td>
+<td><code>{{input}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-text">Text (<code>text</code>)</h2>
+<p>Category: Text.</p>
+<p>Create text. Insert variables using the reference picker.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>Text</td>
+<td><code>Hello, world!</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="number-number">Number (<code>number</code>)</h2>
+<p>Category: Numbers.</p>
+<p>Create a finite numeric value.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>number</code></td>
+<td>Number</td>
+<td><code>1</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="boolean-boolean">Boolean (<code>boolean</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Create true or false.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>value</code></td>
+<td>Value</td>
+<td><code>true</code></td>
+<td>true, false</td>
+</tr>
+</tbody>
+</table>
+<h2 id="comment-comment">Comment (<code>comment</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Document a step without changing its output.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>text</code></td>
+<td>Comment</td>
+<td>``</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="shortcut-input-input">Shortcut Input (<code>input</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Get the input supplied when this shortcut starts.</p>
+<p>No parameters.</p>
+<h2 id="set-variable-setvariable">Set Variable (<code>setVariable</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Store a typed value for this run.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Name</td>
+<td><code>Value</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-variable-getvariable">Get Variable (<code>getVariable</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Retrieve a named variable.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Name</td>
+<td><code>Value</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="if-if">If (<code>if</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Run a block when its condition is true.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>comparison</code></td>
+<td>Condition</td>
+<td><code>has value</code></td>
+<td>has value, equals, not equals, contains, greater than, less than, is true</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>Compare to</td>
+<td>``</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="otherwise-else">Otherwise (<code>else</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Alternate branch of the current If block.</p>
+<p>No parameters.</p>
+<h2 id="end-if-endif">End If (<code>endIf</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Close the current If block.</p>
+<p>No parameters.</p>
+<h2 id="repeat-repeat">Repeat (<code>repeat</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Repeat the block and collect its outputs.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>count</code></td>
+<td>Times</td>
+<td><code>3</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="repeat-with-each-repeateach">Repeat with Each (<code>repeatEach</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Run the block for every item. Use Repeat Item and Repeat Index.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="end-repeat-endrepeat">End Repeat (<code>endRepeat</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Close the current Repeat block.</p>
+<p>No parameters.</p>
+<h2 id="wait-wait">Wait (<code>wait</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Pause cooperatively; Stop cancels the wait.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>seconds</code></td>
+<td>Seconds</td>
+<td><code>1</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="stop-and-output-stop">Stop and Output (<code>stop</code>)</h2>
+<p>Category: Scripting.</p>
+<p>End this shortcut and return the selected value.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-shortcut-runworkflow">Run Shortcut (<code>runWorkflow</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Run another Studio shortcut by name or identifier.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>workflow</code></td>
+<td>Shortcut</td>
+<td>``</td>
+<td></td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="ask-for-input-ask">Ask for Input (<code>ask</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Show a text prompt. Cancel stops the run.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prompt</code></td>
+<td>Prompt</td>
+<td><code>What is your name?</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>default</code></td>
+<td>Default answer</td>
+<td>``</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="choose-from-list-choose">Choose from List (<code>choose</code>)</h2>
+<p>Category: Lists.</p>
+<p>Ask the user to select one list item.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>prompt</code></td>
+<td>Prompt</td>
+<td><code>Choose an item</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="show-result-show">Show Result (<code>show</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Present a result in a native dialog.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="show-alert-alert">Show Alert (<code>alert</code>)</h2>
+<p>Category: Scripting.</p>
+<p>Display an alert and continue with the existing input.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>Title</td>
+<td><code>Shortcut</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Message</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="show-notification-notification">Show Notification (<code>notification</code>)</h2>
+<p>Category: Mac.</p>
+<p>Post a system notification when permission is granted.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>Title</td>
+<td><code>Shortcut Studio</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Message</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="change-case-uppercase">Change Case (<code>uppercase</code>)</h2>
+<p>Category: Text.</p>
+<p>Change the case of text.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>case</code></td>
+<td>Case</td>
+<td><code>uppercase</code></td>
+<td>uppercase, lowercase, title case</td>
+</tr>
+</tbody>
+</table>
+<h2 id="trim-whitespace-trim">Trim Whitespace (<code>trim</code>)</h2>
+<p>Category: Text.</p>
+<p>Remove whitespace at both ends.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="replace-text-replace">Replace Text (<code>replace</code>)</h2>
+<p>Category: Text.</p>
+<p>Replace literal text or a regular expression.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>find</code></td>
+<td>Find</td>
+<td>``</td>
+<td></td>
+</tr>
+<tr>
+<td><code>replacement</code></td>
+<td>Replace with</td>
+<td>``</td>
+<td></td>
+</tr>
+<tr>
+<td><code>regex</code></td>
+<td>Regular expression</td>
+<td><code>false</code></td>
+<td>false, true</td>
+</tr>
+</tbody>
+</table>
+<h2 id="match-text-match">Match Text (<code>match</code>)</h2>
+<p>Category: Text.</p>
+<p>Find regex matches as a list.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>pattern</code></td>
+<td>Pattern</td>
+<td><code>\w+</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="split-text-split">Split Text (<code>split</code>)</h2>
+<p>Category: Text.</p>
+<p>Split text using a literal separator.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separator</td>
+<td><code>\n</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="combine-text-combine">Combine Text (<code>combine</code>)</h2>
+<p>Category: Text.</p>
+<p>Join list items with a separator.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>separator</code></td>
+<td>Separator</td>
+<td><code>\n</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="base64-encode-decode-base64">Base64 Encode / Decode (<code>base64</code>)</h2>
+<p>Category: Text.</p>
+<p>Convert UTF-8 text to or from Base64.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td>Mode</td>
+<td><code>encode</code></td>
+<td>encode, decode</td>
+</tr>
+</tbody>
+</table>
+<h2 id="url-encode-decode-urlencode">URL Encode / Decode (<code>urlEncode</code>)</h2>
+<p>Category: Web.</p>
+<p>Percent-encode text or decode percent escapes.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td>Mode</td>
+<td><code>encode</code></td>
+<td>encode, decode</td>
+</tr>
+</tbody>
+</table>
+<h2 id="calculate-calculate">Calculate (<code>calculate</code>)</h2>
+<p>Category: Numbers.</p>
+<p>Apply an arithmetic operation to two numbers.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td>First number</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>operation</code></td>
+<td>Operation</td>
+<td><code>+</code></td>
+<td>+, -, ×, ÷, mod, power</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>Second number</td>
+<td><code>1</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="round-number-round">Round Number (<code>round</code>)</h2>
+<p>Category: Numbers.</p>
+<p>Round to a specified decimal precision.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>places</code></td>
+<td>Decimal places</td>
+<td><code>0</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="random-number-random">Random Number (<code>random</code>)</h2>
+<p>Category: Numbers.</p>
+<p>Generate an integer in an inclusive range.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>min</code></td>
+<td>Minimum</td>
+<td><code>1</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>max</code></td>
+<td>Maximum</td>
+<td><code>100</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="calculate-statistics-statistics">Calculate Statistics (<code>statistics</code>)</h2>
+<p>Category: Numbers.</p>
+<p>Compute statistics over a numeric list.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>statistic</code></td>
+<td>Statistic</td>
+<td><code>sum</code></td>
+<td>sum, average, minimum, maximum, count</td>
+</tr>
+</tbody>
+</table>
+<h2 id="list-list">List (<code>list</code>)</h2>
+<p>Category: Lists.</p>
+<p>Create a list with one text item per line.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>items</code></td>
+<td>Items</td>
+<td><code>One&lt;br&gt;Two&lt;br&gt;Three</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="count-count">Count (<code>count</code>)</h2>
+<p>Category: Lists.</p>
+<p>Count items, words, or characters.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>Count</td>
+<td><code>items</code></td>
+<td>items, words, characters</td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-item-from-list-getitem">Get Item from List (<code>getItem</code>)</h2>
+<p>Category: Lists.</p>
+<p>Retrieve a one-based item, first item, last item, or random item.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>index</code></td>
+<td>Index</td>
+<td><code>1</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="sort-list-sort">Sort List (<code>sort</code>)</h2>
+<p>Category: Lists.</p>
+<p>Sort items as text or numeric values.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>Order</td>
+<td><code>ascending</code></td>
+<td>ascending, descending</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Compare</td>
+<td><code>text</code></td>
+<td>text, number</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reverse-list-reverse">Reverse List (<code>reverse</code>)</h2>
+<p>Category: Lists.</p>
+<p>Reverse item order.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="remove-duplicates-unique">Remove Duplicates (<code>unique</code>)</h2>
+<p>Category: Lists.</p>
+<p>Keep the first occurrence of each typed value.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="filter-list-filter">Filter List (<code>filter</code>)</h2>
+<p>Category: Lists.</p>
+<p>Keep text items containing a string.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>contains</code></td>
+<td>Contains</td>
+<td>``</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="dictionary-dictionary">Dictionary (<code>dictionary</code>)</h2>
+<p>Category: Dictionaries.</p>
+<p>Create a dictionary from JSON.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>json</code></td>
+<td>JSON</td>
+<td><code>{"name":"World"}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-dictionary-from-input-parsejson">Get Dictionary from Input (<code>parseJSON</code>)</h2>
+<p>Category: Dictionaries.</p>
+<p>Parse JSON into typed values.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-dictionary-value-getvalue">Get Dictionary Value (<code>getValue</code>)</h2>
+<p>Category: Dictionaries.</p>
+<p>Follow a dot-separated dictionary key path.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>key</code></td>
+<td>Key</td>
+<td><code>name</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="set-dictionary-value-setvalue">Set Dictionary Value (<code>setValue</code>)</h2>
+<p>Category: Dictionaries.</p>
+<p>Set a top-level key on a copy of the dictionary.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>key</code></td>
+<td>Key</td>
+<td><code>name</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>Value</td>
+<td><code>World</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-dictionary-keys-keys">Get Dictionary Keys (<code>keys</code>)</h2>
+<p>Category: Dictionaries.</p>
+<p>Return dictionary keys in sorted order.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="convert-to-json-json">Convert to JSON (<code>json</code>)</h2>
+<p>Category: Dictionaries.</p>
+<p>Serialize a typed value to JSON.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="url-url">URL (<code>url</code>)</h2>
+<p>Category: Web.</p>
+<p>Create and validate an HTTP or HTTPS URL.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td>URL</td>
+<td><code>https://example.com</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-contents-of-url-http">Get Contents of URL (<code>http</code>)</h2>
+<p>Category: Web.</p>
+<p>Make an HTTP request; unsuccessful responses fail the run.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>url</code></td>
+<td>URL</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td>Method</td>
+<td><code>GET</code></td>
+<td>GET, POST, PUT, PATCH, DELETE</td>
+</tr>
+<tr>
+<td><code>headers</code></td>
+<td>Headers (JSON)</td>
+<td><code>{}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>body</code></td>
+<td>Request body</td>
+<td>``</td>
+<td></td>
+</tr>
+<tr>
+<td><code>response</code></td>
+<td>Response</td>
+<td><code>text</code></td>
+<td>text, json</td>
+</tr>
+</tbody>
+</table>
+<h2 id="open-url-openurl">Open URL (<code>openURL</code>)</h2>
+<p>Category: Web.</p>
+<p>Open a URL in the default app or a chosen browser/application.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>bundle</code></td>
+<td>Application bundle ID (optional)</td>
+<td>``</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="current-date-date">Current Date (<code>date</code>)</h2>
+<p>Category: Mac.</p>
+<p>Return the current timestamp in ISO 8601 format.</p>
+<p>No parameters.</p>
+<h2 id="format-date-formatdate">Format Date (<code>formatDate</code>)</h2>
+<p>Category: Mac.</p>
+<p>Format an ISO 8601 timestamp.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Date format</td>
+<td><code>EEEE, d MMMM yyyy</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-clipboard-clipboard">Get Clipboard (<code>clipboard</code>)</h2>
+<p>Category: Mac.</p>
+<p>Read text from the system clipboard.</p>
+<p>No parameters.</p>
+<h2 id="copy-to-clipboard-copy">Copy to Clipboard (<code>copy</code>)</h2>
+<p>Category: Mac.</p>
+<p>Copy text to the system clipboard.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="open-app-openapp">Open App (<code>openApp</code>)</h2>
+<p>Category: Mac.</p>
+<p>Open an app using its bundle identifier.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bundle</code></td>
+<td>Bundle identifier</td>
+<td><code>com.apple.Safari</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="speak-text-speak">Speak Text (<code>speak</code>)</h2>
+<p>Category: Mac.</p>
+<p>Read text aloud using system speech.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="select-file-selectfile">Select File (<code>selectFile</code>)</h2>
+<p>Category: Files.</p>
+<p>Choose a file using a native open panel.</p>
+<p>No parameters.</p>
+<h2 id="read-text-file-readfile">Read Text File (<code>readFile</code>)</h2>
+<p>Category: Files.</p>
+<p>Read a UTF-8 file, limited to 10 MB.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path</code></td>
+<td>File path</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="save-text-file-savefile">Save Text File (<code>saveFile</code>)</h2>
+<p>Category: Files.</p>
+<p>Choose where to save text using a native save panel.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Suggested filename</td>
+<td><code>Result.txt</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-file-details-fileinfo">Get File Details (<code>fileInfo</code>)</h2>
+<p>Category: Files.</p>
+<p>Return file name, size, extension, and path.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path</code></td>
+<td>File path</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-stored-value-storageget">Get Stored Value (<code>storageGet</code>)</h2>
+<p>Category: Storage.</p>
+<p>Get a value persisted across runs of this shortcut.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td>Key</td>
+<td><code>counter</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="set-stored-value-storageset">Set Stored Value (<code>storageSet</code>)</h2>
+<p>Category: Storage.</p>
+<p>Persist a value immediately; cancellation does not undo committed writes.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td>Key</td>
+<td><code>counter</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="remove-stored-value-storagedelete">Remove Stored Value (<code>storageDelete</code>)</h2>
+<p>Category: Storage.</p>
+<p>Remove a stored key from this shortcut.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td>Key</td>
+<td><code>counter</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-apple-shortcut-appleshortcut">Run Apple Shortcut (<code>appleShortcut</code>)</h2>
+<p>Category: Mac.</p>
+<p>Delegate to Apple's installed engine by shortcut name or identifier.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Editor label</th>
+<th>Default</th>
+<th>Choices</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shortcut</code></td>
+<td>Apple shortcut</td>
+<td>``</td>
+<td></td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>Input</td>
+<td><code>{{previous}}</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>
