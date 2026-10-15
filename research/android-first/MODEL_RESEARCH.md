@@ -36,7 +36,7 @@ Use bundled ML Kit Text Recognition for supported scripts as the first text-extr
 - One heavyweight generation session at a time; no permanent reasoning loop or model prewarming by default.
 - A 20-entry catalogue is a choice of downloadable models, not 20 loaded engines. Start with one text model, OCR, and optionally one vision model.
 - Owner's 50 GB is a ceiling. Initial proposed download allocation is 40 GB with 10 GB reserved for temporary conversions/downloads and workspace; expose actual usage and let the owner choose a lower cap.
-- Model admission uses measured available RAM, Android memory pressure, context/image limits and the other running apps. A proposed 3 GB working budget is an initial engineering target, not a verified allowance.
+- Model admission uses measured available RAM, Android memory pressure, context/image limits and the other running apps. The owner now requires a fixed 3 GB aggregate agent budget. The binding design contract is `android-agent/policy/RESOURCE_CONTRACT.md`; enforcement is not yet implemented or measured on-device.
 - Bounded context, output tokens, task steps and execution time; unload on explicit stop and memory pressure. Stop cancels outstanding actions as well as generation where the backend supports cancellation.
 - Use thermal/battery signals to reduce or pause inference. Zero heat or battery consumption cannot be promised.
 - Apple Foundation Models remain an optional paired-Mac backend, clearly labelled remote inference. Android-local tasks and downloaded Android models do not depend on that Mac.

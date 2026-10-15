@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "status": "required-contract-not-yet-enforced-on-device",
+  "target": {"device": "OnePlus Nord CE5", "physicalRamBytes": 8000000000},
+  "memory": {
+    "aggregateAgentBudgetBytes": 3000000000,
+    "modelAdmissionPeakBytes": 2250000000,
+    "minimumFreeSystemBytesAfterAdmission": 2000000000,
+    "stopAtObservedAggregateBytes": 2700000000,
+    "maxHeavyweightSessions": 1,
+    "requireBackendAllocationAccounting": true,
+    "requireExactArtifactDeviceProfile": true,
+    "allowUnaccountedGpuOrNpuBackend": false,
+    "onUnknownOrStaleTelemetry": "deny-model-start-or-stop-active-worker",
+    "overflowBehavior": "deny-allocation-and-cancel-task",
+    "silentLimitIncrease": false
+  },
+  "routing": {
+    "priority": ["explicit-command", "saved-deterministic-workflow", "specialized-local-tool", "model-plan"],
+    "modelCannotOverrideResourceGate": true,
+    "modelCannotExecuteArbitraryShell": true
+  },
+  "thermal": {
+    "lightStatus": "reduce-inference-workload",
+    "moderateOrHigherStatus": "cancel-and-unload-inference",
+    "invalidOrMissingSignal": "deny-heavy-inference",
+    "cooldownSeconds": 60,
+    "automaticTaskReplayAfterCooling": false
+  },
+  "battery": {
+    "minimumPercentForModelStart": 20,
+    "modelInBatterySaver": false,
+    "modelAtBatteryLowSignal": false,
+    "chargingBypassesThermalGate": false,
+    "idleWakeLock": false
+  },
+  "execution": {
+    "defaultContextTokens": 2048,
+    "maximumOutputTokens": 512,
+    "maximumModelCallsPerTask": 6,
+    "maximumToolActionsPerTask": 20,
+    "maximumRetriesPerAction": 1,
+    "maximumTaskWallSeconds": 120,
+    "modelPrewarm": false,
+    "idleModelRetentionSeconds": 0,
+    "pauseHeavyInferenceWhenScreenLocked": true,
+    "backgroundInferenceWithoutExplicitActiveTask": false,
+    "cancelDeadlineMilliseconds": 2000,
+    "workerResponseTimeoutMilliseconds": 2000,
+    "memoryTelemetryMaximumAgeMilliseconds": 1000,
+    "isolatedWorkerRequired": true,
+    "cancelPendingActionsOnStop": true,
+    "killWorkerOnMissedCancelDeadline": true
+  }
+}
