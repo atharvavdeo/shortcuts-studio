@@ -1,0 +1,110 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Proposed messenger gateway command protocol — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="proposed-messenger-gateway-command-protocol">Proposed messenger gateway command protocol</h1>
+<p><strong>Design reference. The runnable 0.2.0 subset is documented in <a href="MESSENGER_GUIDE.html">Messenger guide</a>, including differences in routes, expiry and browser trust.</strong> Version <code>studio.remote/1</code> below is a design contract to evaluate. No gateway, Mac connector, Android app or paired device currently implements this contract. The owner selected an internet relay for approved Mac workflows, with AI only when the workflow needs it.</p>
+<h2 id="transport-and-pairing">Transport and pairing</h2>
+<p>Phone → internet gateway ← outbound Mac connector is the delivery topology. The gateway authenticates routing sessions; the Mac separately verifies paired-device authority and workflow grants. Protect payloads end to end with a reviewed protocol, and keep TLS validation enabled. Gateway receipt is Sent; only a durable Mac acknowledgment is Accepted. Model inference is never performed by the relay.</p>
+<p>Use encrypted authenticated connections. Discovery can advertise a service name/protocol version, never a credential. A trusted QR produced on the Mac carries a short-lived single-use high-entropy challenge and the Mac identity fingerprint. Both devices show the same peer identity before the Mac owner confirms pairing. Rate-limit pairing attempts, expire pending challenges, and revoke device credentials from the Mac. Store long-lived material in Keychain/Android Keystore, not workflow JSON, URLs, analytics or logs.</p>
+<p>TLS certificate validation must remain enabled. The relay needs a valid server identity; paired devices also need authenticated payload identities. QR trust does not justify accepting every TLS certificate. Evaluate expiry, rotation, identity storage and reconnect behavior in the pairing spike. An account or relay session alone is not a Mac workflow grant. Bonjour discovery is optional and is not required for this internet topology.</p>
+<h2 id="capability-and-authorization-model">Capability and authorization model</h2>
+<p>A phone gets a device ID and a set of owner-approved workflow grants, each bound to a workflow revision and capability set. Only granted names/IDs/input descriptions are listed. The phone submits a fixed workflow ID plus Text; it cannot send action definitions, arbitrary paths, code, shell strings, bundle IDs, target URLs or imported files as new execution authority.</p>
+<p>A trusted workflow may interpret its bounded input according to its own authored actions, such as encoding a query for a fixed Google endpoint. The Mac validates grants and immutable action configuration first. Changes to actions/parameters invalidate the revision grant. Persisted runtime values are not configuration authorization; resource/destination policy must account for any dynamic values used by a shared workflow.</p>
+<p>Only the caller that owns a run, or the Mac owner, can read/cancel it. Remote MVP workflows reject interactive actions or return Needs Local Attention. Apple CLI delegation is excluded until a selected prompt-free integration is individually evaluated; it cannot be assumed noninteractive from a name/UUID.</p>
+<h2 id="logical-route-proposal">Logical route proposal</h2>
+<p>These logical operations are mediated by the gateway and mapped to the outbound Mac session; they are not public Mac HTTP ports. Relay administration and device revocation require separate authenticated owner operations. The gateway never supplies new workflow configuration.</p>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /v1/capabilities</code></td>
+<td>Authenticated protocol/host state, input limits, model availability if shared; no full system/library dump</td>
+</tr>
+<tr>
+<td><code>GET /v1/workflows</code></td>
+<td>Only this device's grants; current revision and input description</td>
+</tr>
+<tr>
+<td><code>POST /v1/runs</code></td>
+<td>Validate and persist acceptance, then execute once or return Busy/Conflict/etc.</td>
+</tr>
+<tr>
+<td><code>GET /v1/runs/{runID}</code></td>
+<td>Authorized current/terminal status for recovery after disconnect</td>
+</tr>
+<tr>
+<td><code>GET /v1/runs/{runID}/events</code></td>
+<td>Run-scoped events with resumable sequence numbers; transport framing chosen in spike</td>
+</tr>
+<tr>
+<td><code>POST /v1/runs/{runID}/cancel</code></td>
+<td>Idempotent cancellation request for an owned active run</td>
+</tr>
+<tr>
+<td><code>DELETE /v1/devices/{deviceID}</code></td>
+<td>Mac owner management; not an unauthenticated phone route</td>
+</tr>
+</tbody>
+</table>
+<p>No general <code>/execute-code</code>, <code>/shell</code>, <code>/open-any-url</code>, <code>/read-file</code>, <code>/import-workflow</code> or <code>/all-history</code> route belongs in the MVP.</p>
+<h2 id="run-request-example">Run request example</h2>
+<pre><code class="language-json">{
+  &quot;protocol&quot;: &quot;studio.remote/1&quot;,
+  &quot;requestID&quot;: &quot;6785e6b3-c99f-4bc1-9a56-b115c49a8925&quot;,
+  &quot;deviceID&quot;: &quot;owner-paired-device-id&quot;,
+  &quot;clientSequence&quot;: &quot;42&quot;,
+  &quot;destinationMacID&quot;: &quot;paired-mac-id&quot;,
+  &quot;expiresAt&quot;: &quot;2026-10-13T12:01:00Z&quot;,
+  &quot;workflowID&quot;: &quot;owner-granted-workflow-uuid&quot;,
+  &quot;workflowRevision&quot;: &quot;sha256-of-canonical-action-configuration&quot;,
+  &quot;input&quot;: { &quot;type&quot;: &quot;text&quot;, &quot;value&quot;: &quot;Apple Foundation Models Swift&quot; }
+}
+</code></pre>
+<p>Authentication is supplied by the established channel/credential, not trusted merely because <code>deviceID</code> is in the body. A sequence is an integer string to avoid JSON/JavaScript precision ambiguity. Define the revision hash precisely over canonical configuration; exclude output/history, and do not hash an unstable Swift object description.</p>
+<p>MVP input is Text only, bounded to 16 KiB UTF-8, with smaller workflow/model limits still enforced. The complete request body is bounded to 32 KiB. Reject unknown keys, unsupported protocol/type, invalid UUID/revision/sequence and illegal encodings. JSON-to-<code>WorkflowValue.text</code> is an explicit adapter. The remote format is not the synthesized Codable enum used by <code>.studio</code> files.</p>
+<h2 id="acceptance-idempotency-and-failure">Acceptance, idempotency and failure</h2>
+<p>The gateway enforces size, session, routing and expiry limits, assigns delivery states and retains only bounded expiring records. The Mac checks expiry again at execution acceptance. Clock-skew tolerance, heartbeat age, command TTL and retention are explicit implementation parameters to evaluate. Offline/busy runs are not queued for later automatic execution in the first release.</p>
+<ol>
+<li>Authenticate and authorize before listing details or parsing content beyond safe bounds.</li>
+<li>Check device revocation, workflow identity/revision, capability policy and app/run availability.</li>
+<li>Atomically journal the device/request ID, exact request digest, monotonic sequence and Accepted state before invoking the engine.</li>
+<li>A repeated identical ID returns the original run/result. Same ID with a different body is a conflict.</li>
+<li>After restart, a previously accepted/running run with no terminal record is Interrupted. Do not replay it automatically.</li>
+<li>Publish a terminal state and bounded result atomically with the journal as far as the chosen storage design permits.</li>
+</ol>
+<p>This does not guarantee mathematically exactly-once external effects. An app/browser/server action can commit immediately before a crash and before the result journal commits. The contract protects against automatic duplicate retries and exposes ambiguous interruption. The user deliberately requests a new run after reviewing that outcome.</p>
+<p>Journal retention/sequence rollover/storage limits must be specified before implementation. Persist a device's accepted sequence so expiring terminal records does not make an old command new again. Recoverable lookup needs a documented retention window; unknown/expired requests require an explicit new request, not transparent resubmission. Proposed policy numbers must be tested, not presented as calibrated threat thresholds.</p>
+<h2 id="states-and-output-events">States and output events</h2>
+<figure class="diagram"><img src="assets/remote-states.svg" alt="Remote Protocol Proposal overview"/><figcaption>Rendered overview; editable Mermaid source is in the chapter Markdown.</figcaption></figure><details class="diagram"><summary>Editable diagram source</summary><pre><code>stateDiagram-v2
+    [*] --&gt; Rejected: validation, authorization or Busy
+    [*] --&gt; Accepted: journal committed
+    Accepted --&gt; Running
+    Accepted --&gt; Cancelled: cancelled before execution
+    Running --&gt; Completed
+    Running --&gt; Failed
+    Running --&gt; NeedsLocalAttention
+    Running --&gt; Cancelled
+    Accepted --&gt; Interrupted: host interruption
+    Running --&gt; Interrupted: host interruption
+</code></pre></details>
+<p>A cancellation acknowledgment means the request was accepted, not that committed side effects were reversed. Terminal states can include stable error codes and a sanitized explanation. Do not leak raw stderr, arbitrary local paths or another workflow's logs to the phone.</p>
+<p>Example cumulative model event:</p>
+<pre><code class="language-json">{
+  &quot;runID&quot;: &quot;owned-run-id&quot;,
+  &quot;eventSequence&quot;: &quot;7&quot;,
+  &quot;kind&quot;: &quot;outputSnapshot&quot;,
+  &quot;output&quot;: { &quot;type&quot;: &quot;text&quot;, &quot;value&quot;: &quot;A concise summary so far...&quot; }
+}
+</code></pre>
+<p>The phone replaces the previous snapshot; it does not concatenate. Resumable event sequence and bounded final lookup prevent duplicate text and avoid rerunning when an event connection drops. Authenticate the event subscription and filter ownership before sending. The existing global <code>@Published output</code> is not directly suitable for this contract.</p>
+<h2 id="stable-error-vocabulary-to-evaluate">Stable error vocabulary to evaluate</h2>
+<p><code>NOT_PAIRED</code>, <code>DEVICE_REVOKED</code>, <code>WORKFLOW_NOT_GRANTED</code>, <code>REVISION_CHANGED</code>, <code>BUSY</code>, <code>INPUT_TOO_LARGE</code>, <code>PROTOCOL_UNSUPPORTED</code>, <code>REQUEST_CONFLICT</code>, <code>REQUEST_EXPIRED</code>, <code>LOCAL_PERMISSION_REQUIRED</code>, <code>MODEL_UNAVAILABLE</code>, <code>HOST_INTERRUPTED</code>, <code>ACTION_FAILED</code>, <code>CANCELLED</code>.</p>
+<p>Do not turn all errors into retries. Permission/authorization/conflict/interruption require an explicit user or owner action. Status recovery is read-only; execution requires a distinct accepted command.</p>
+<h2 id="notification-contract">Notification contract</h2>
+<p>Push contains a bounded opaque run/result-available hint, never the model prompt or result. A notification tap performs authorized result lookup and cannot trigger execution. Deduplicate pushes and update a single notification keyed by run ID. Default lock-screen wording hides sensitive content. Notification denial or delayed delivery does not change execution state; the inbox recovers results on next foreground connection. Foreground streams are cumulative snapshots; only terminal states normally trigger a completion alert.</p>
+<p>The run journal is the authority. Push delivery, a gateway acknowledgment and a model token are not proof of completed workflow execution. Stable progress phases include Sending, Sent, Accepted, Running and terminal results. Gateway expiry before Mac acceptance is DeliveryExpired; accepted commands recover from the Mac journal and are never resubmitted as new runs automatically.</p>
+<h2 id="platform-enforcement-and-privacy">Platform enforcement and privacy</h2>
+<p>Android notification permission/channels, push token lifecycle, background restrictions, TLS/Keystore/Keychain, payload authentication, secret redaction and relay outages require real-device tests. The gateway creates a new service/privacy boundary: disclose metadata, retention and operators before release. End-to-end payload protection does not hide device identifiers, routing times or traffic sizes from the relay.</p>
+<p>No listener or model API is exposed on the Mac. A relay does not make an asleep Mac execute or give Android access to Apple's private APIs. References and the acceptance matrix are in <a href="ANDROID_SCOPE.html">Android scope</a>. No implementation should be declared complete until the intended-device tests pass.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

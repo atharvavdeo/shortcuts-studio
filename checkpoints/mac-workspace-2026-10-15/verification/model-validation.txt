@@ -1,0 +1,10 @@
+Availability: Apple on-device model available
+PASS model action: 8 snapshots; 2 plus 3 equals 5.
+PASS empty prompt rejected
+Draft generated: ["text[\"text\": \"Hello from the on-device draft\"]", "show[\"input\": \"{{previous}}\"]"]
+PASS draft 1: ["text", "show"]; result "Hello from the on-device draft"
+Draft generated: ["split[\"input\": \"{{input}}\", \"separator\": \"\\n\"]", "unique[\"input\": \"{{previous}}\"]", "combine[\"input\": \"{{previous}}\", \"separator\": \"\\n\"]", "show[\"input\": \"{{previous}}\"]"]
+PASS draft 2: ["split", "unique", "combine", "show"]; result "One\nTwo"
+PASS model cancellation
+PASS cancellation during streaming after 2 snapshots
+VALIDATION PASS

@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Build, validation and release guide — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="build-validation-and-release-guide">Build, validation and release guide</h1>
+<h2 id="local-artifacts">Local artifacts</h2>
+<p>The owner's current choice is <strong>local downloads</strong>. Packaging produces:</p>
+<ul>
+<li><code>dist/Shortcut Studio.app</code>: native executable, original icon, bundle metadata, privacy declaration and offline handbook.</li>
+<li><code>dist/Shortcut-Studio-macOS.zip</code>: app archive for local one-click download.</li>
+<li><code>dist/Shortcut-Studio-Source.zip</code>: allowlisted project source/docs/examples/scripts/gateway/synthetic evidence; no <code>.build</code>, Git state, user library or credentials.</li>
+<li><code>dist/SHA256SUMS</code>: archive checksums.</li>
+<li><code>verification/build-manifest.json</code>: dated configuration/signature/source/binary/archive hashes.</li>
+<li><code>verification/distribution-validation.json</code>: mechanical packaging, catalog, handbook and contrast checks.</li>
+</ul>
+<p>The README uses locally generated SVG badges linked to actual local artifacts or evidence. There is no fake GitHub release, CI, App Store, Apple-approved or HIG-certified badge. A public link needs real hosting, which is intentionally not configured.</p>
+<h2 id="reproduce-the-developer-checks">Reproduce the developer checks</h2>
+<pre><code class="language-sh">bash scripts/test.sh
+bash scripts/validate-store.sh
+node --test gateway/test/*.test.mjs
+bash scripts/validate-messenger.sh
+bash scripts/validate-model.sh
+swift run --package-path examples/EngineClient
+bash scripts/generate-reference.sh
+python3 scripts/render-handbook.py
+bash scripts/build-app.sh release
+python3 scripts/validate-distribution.py
+</code></pre>
+<p>Run from the package root. The model command requires eligible, ready Apple Intelligence. The store harness uses a temporary library, not the user's data. The external example uses the exported <code>WorkflowCore</code> product.</p>
+<p><code>render-handbook.py</code> uses the Python Markdown package pinned in <code>scripts/requirements-docs.txt</code>. Generated HTML is retained in the source snapshot. Normal app packaging needs Python 3 for validation/provenance but uses already-rendered HTML, so it does not install Python packages or fetch assets. A freshness check rejects stale Markdown/reference/HTML inputs.</p>
+<h2 id="default-signing">Default signing</h2>
+<p><code>build-app.sh</code> defaults to <code>STUDIO_SIGNING_IDENTITY=-</code> (ad hoc) and enables hardened runtime. It verifies the bundle strictly, copies current handbook/privacy assets, makes ZIPs and hashes. It does not submit to Apple or publish. Ad hoc integrity verification is not Developer ID trust, notarization or a successful clean-machine Gatekeeper installation.</p>
+<p>Full Xcode is recommended for a distribution workflow. Command Line Tools successfully built this local app but are not a substitute for account/certificate/entitlement/device checks.</p>
+<h2 id="direct-public-distribution-when-selected">Direct public distribution, when selected</h2>
+<p>Apple documents Developer ID Application signing, hardened runtime, secure timestamps and notarization for direct distribution. <a href="https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution">Notarization guidance</a> and <a href="https://developer.apple.com/documentation/xcode/preparing-your-app-for-distribution">distribution preparation</a> are the authority.</p>
+<p>Configure a real installed identity and a notarytool Keychain profile yourself. Credentials must not enter source files, shell history examples, README, archives or logs. The script reads profile/identity names, not pasted Apple passwords.</p>
+<pre><code class="language-sh">STUDIO_SIGNING_IDENTITY='Developer ID Application: Your Verified Organization (TEAMID)' \
+STUDIO_NOTARY_PROFILE='your-existing-keychain-profile' \
+bash scripts/build-app.sh release
+</code></pre>
+<p>These are illustrative identity/profile values, not working credentials. When a profile is explicitly supplied, the script signs with a timestamp, submits the app ZIP, requires an Accepted result, staples/validates the ticket, rebuilds the ZIP to include it, then records checksums. Do not supply a profile unless uploading the app to Apple's service is intended.</p>
+<p>Afterward assess the exact deliverable on a clean machine using current Gatekeeper behavior, check the offline help/type association/first-launch permissions, and publish only the verified artifact. A notarization ticket is not App Review, a design approval or a malware-proof guarantee.</p>
+<h2 id="mac-app-store-path">Mac App Store path</h2>
+<p>The current app is not sandboxed, provisioned or submitted. Apple requires App Sandbox for that channel. A sandboxed edition must redesign arbitrary path access around user grants/security-scoped resources and test CLI/system integration. Register capabilities and targets through a valid Apple development setup; use least-privilege entitlements. Do not add broad exceptions or disable library validation/JIT protections to pass a superficial checklist.</p>
+<p>Also complete accurate store metadata, privacy answers, support/privacy URLs, appropriate assets/localizations, App Review notes and ownership/license checks. Confirm originality and actual functionality. Review remains Apple's decision. <a href="https://developer.apple.com/app-store/review/guidelines/">App Review Guidelines</a> and the <a href="APPLE_STANDARDS_AUDIT.html">standards audit</a> enumerate applicability.</p>
+<h2 id="version-and-api-discipline">Version and API discipline</h2>
+<p>Info.plist is the packaged app's version source; the About panel reads it. Public library/API changes need migration/compatibility notes. <code>.studio</code> file version and library schema version do not automatically track the product version. New optional fields need old-fixture tests; new required fields/formats need explicit migration and preserved bytes.</p>
+<p>The generated catalog and tagged-value samples reflect actual Swift code. The standards audit must not promote a successful build or contrast calculation to complete accessibility compliance. Static badges should link to dated evidence and should be updated after checks, not used as perpetual CI claims.</p>
+<h2 id="before-handing-over">Before handing over</h2>
+<ol>
+<li>Preserve the user's local edits/data and exclude them from artifacts.</li>
+<li>Run core/store/model/example checks as relevant; record failures as failures.</li>
+<li>Update reference, handbook, source map, privacy/capability inventory and Android proposal status.</li>
+<li>Verify Markdown/HTML internal links, bundled assets and rendered critical layouts.</li>
+<li>Verify signature/runtime flags and matching archive/binary/source hashes.</li>
+<li>Distinguish user confirmation from agent-observed page/app behavior.</li>
+<li>Record outstanding manual/Apple-account/device gates.</li>
+<li>Leave the native app usable with demonstration automations disabled unless the owner enabled them.</li>
+</ol>
+<h3 id="build-while-the-application-is-running">Build while the application is running</h3>
+<p>The packager creates and signs a separate staged bundle. It moves the previous generated app into <code>.build/app-stage.*</code> before installing the replacement, retaining mapped executable inodes instead of overwriting them. Earlier in-place executable copying caused confirmed macOS Invalid Page code-signature kills. Staging directories are excluded from source downloads. Clean them only after the old app process has exited. The running process uses its already-loaded version until deliberately restarted; installing a new artifact is not an automatic process reload.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

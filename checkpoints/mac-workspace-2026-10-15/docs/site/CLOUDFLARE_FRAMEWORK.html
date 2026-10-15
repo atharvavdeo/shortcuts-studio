@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Standard internet setup framework — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="standard-internet-setup-framework">Standard internet setup framework</h1>
+<p><strong>Status: hosted single-owner Worker/Durable Object adapter implemented and deployed.</strong> See <a href="HOSTED_GATEWAY.html">Hosted gateway</a> for the stable URL and validation. Automatic per-owner provisioning, public template distribution and a native Android installer remain future work.</p>
+<h2 id="desired-owner-journey">Desired owner journey</h2>
+<ol>
+<li>Install a signed/notarized Mac companion. Its setup window remains available while other apps execute.</li>
+<li>Choose <strong>Set up my internet gateway</strong>. Authorize deployment into the owner's Cloudflare account through the official OAuth/deploy workflow, select the account when more than one exists, and show resources/hosting policy before provisioning.</li>
+<li>Deploy a pinned gateway release, generate independent secrets, and obtain a stable <code>workers.dev</code> URL or configured domain.</li>
+<li>Save Mac credentials in Keychain under a stable signing identity. Show a QR code/link containing a short-lived pairing challenge, never a long-lived bearer secret.</li>
+<li>Open/install the companion on Android and pair with Mac confirmation. Cloudflare owns hosting authorization; pairing/workflow grants own execution authorization.</li>
+<li>Run setup checks for on-device model availability, Desktop permission, app-control permission, notification subscription and a harmless Echo round trip.</li>
+<li>Choose approved workflows/apps. Input/output travel through the gateway. Actual inference/actions remain on the Mac.</li>
+</ol>
+<p>Android installation alone cannot provide Apple's Foundation Models or authorize a person's Mac. The Mac companion must exist, be paired, remain awake/reachable and have an eligible/enabled/ready Apple on-device model. A phone-only product would need a separate Android/cloud model provider and executor; that is a different runtime.</p>
+<h2 id="cloudflare-supported-distribution-paths">Cloudflare-supported distribution paths</h2>
+<p>Cloudflare documents <strong>Deploy to Cloudflare</strong> buttons/templates for deploying an application into another owner's account. The button requires a real source template/repository and its deployment metadata; this checkout is currently local. Wrangler supports official OAuth login, authentication inspection and Worker deployment. Being signed into the Cloudflare website is not a credential this app should read or silently reuse. The deployment authorization is a separate explicit OAuth/account step.</p>
+<p>References: <a href="https://developers.cloudflare.com/workers/platform/deploy-buttons/">Deploy buttons</a>, <a href="https://developers.cloudflare.com/workers/get-started/quickstarts/">templates</a>, <a href="https://developers.cloudflare.com/workers/wrangler/commands/general/">Wrangler authentication</a>, <a href="https://developers.cloudflare.com/workers/wrangler/commands/workers/">Worker deployment</a>.</p>
+<p>Recommended first public distribution: one gateway per owner's account. A centrally operated multi-user service additionally requires owner accounts, tenant isolation, abuse/quotas, credential recovery, retention/deletion operations, privacy/support terms and ongoing service ownership. Do not advertise the current single-owner Node process as that service.</p>
+<h2 id="framework-boundaries">Framework boundaries</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deployment adapter</td>
+<td>Official account authorization, versioned provisioning, secret storage, URL capture, rollback and resource inventory</td>
+</tr>
+<tr>
+<td>Gateway runtime</td>
+<td>Durable command/result ownership, pairing/expiry/revocation, authenticated routing and bounded push hints</td>
+</tr>
+<tr>
+<td>Mac agent SDK</td>
+<td>Awaitable run ownership, versioned grants, cached session keys, deterministic validators and cancellation</td>
+</tr>
+<tr>
+<td>Permission/readiness UI</td>
+<td>Actual OS/model states, user-triggered permission requests, clear denied/revoked paths and harmless checks</td>
+</tr>
+<tr>
+<td>Phone UI</td>
+<td>Shared visual tokens, workflow cards/input/output/history, pairing, install affordance and notification status</td>
+</tr>
+<tr>
+<td>Model providers</td>
+<td>Apple system model on eligible Mac; future providers explicitly configured, never silent cloud fallback</td>
+</tr>
+<tr>
+<td>Release/update path</td>
+<td>Stable Developer ID identity, notarization, signed version/channel metadata and migration compatibility</td>
+</tr>
+</tbody>
+</table>
+<p>The Worker/Durable Object adapter now shares the encrypted protocol with the Node relay and uses durable SQLite rows plus fetch-based push transport. Cross-runtime and restart checks pass for the current single-owner deployment. Automatic per-owner deployment and public template distribution remain separate work.</p>
+<h2 id="permissions-in-one-place">Permissions in one place</h2>
+<ul>
+<li><strong>Cloudflare:</strong> authorize deploying the named gateway resources; do not collect browser cookies or put management tokens in phone code.</li>
+<li><strong>macOS app control:</strong> public AX APIs require the owner's OS permission. Current macOS 27 names the panel Device Control and Data Access; earlier macOS calls it Accessibility. The application cannot grant this to itself.</li>
+<li><strong>Desktop:</strong> filesystem privacy applies separately; filenames-only workflow avoids arbitrary file content/path access.</li>
+<li><strong>Foundation Models:</strong> use public availability reasons (ineligible, disabled, model-not-ready). The SDK cannot make unsupported hardware eligible or force download/readiness silently.</li>
+<li><strong>Android browser notifications:</strong> request on owner action; validate registration, test a generic alert, preserve inbox when denied. Provider receipt is not device display.</li>
+<li><strong>Execution:</strong> pair identity, workflow revision and application allowlist are explicit grants. No shell/code/file-mutation route is added automatically by deploying a gateway.</li>
+</ul>
+<p>Onboarding can request, guide, verify and persist these choices. OS permissions, account authorization and model prerequisites remain real platform boundaries.</p>
+<h2 id="password-and-window-repairs">Password and window repairs</h2>
+<p>The connector now caches relay/device credentials in memory after unlocking the session. AES-GCM reads the cached device key rather than calling Keychain for every command/snapshot. Revoked relay devices are removed from the local paired-device list, avoiding obsolete-key prompts. Isolated tests count credential reads during real encrypted command/result/cancel flows.</p>
+<p>Messenger now uses a dedicated SwiftUI Window instead of a modal sheet tied to the authoring window. Opening other apps leaves the setup window available. During development, replacing an ad hoc signed app can still change its OS trust identity; a stable Developer ID signing/update pipeline is needed before claiming seamless public setup. This repair does not promise that a locked Keychain or first authorization never asks the owner.</p>
+<h2 id="release-gates">Release gates</h2>
+<ol>
+<li>Package and validate the current UI/key-cache fixes on this Mac and Android phone.</li>
+<li>Build the durable Cloudflare adapter and automatic account-specific deployment transaction; validate locally and through a scoped real account.</li>
+<li>Publish the pinned template and signed Mac artifact at owner-approved destinations.</li>
+<li>Test clean-machine setup, Android install/pairing, permission denial/revocation, key caching, updates, model readiness, offline/crash/reconnect and notification delivery.</li>
+<li>Measure setup completion and failure recovery on multiple devices; no universal-installation claim from one phone.</li>
+</ol></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

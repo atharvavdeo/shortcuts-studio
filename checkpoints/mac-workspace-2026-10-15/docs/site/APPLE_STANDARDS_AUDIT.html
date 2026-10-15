@@ -1,0 +1,214 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Apple design and platform standards audit — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="apple-design-and-platform-standards-audit">Apple design and platform standards audit</h1>
+<p><strong>Scope:</strong> Shortcut Studio 0.1.1, native macOS local distribution. Reviewed against primary Apple guidance on 13 October 2026. HIG recommendations, API contracts, distribution requirements and App Review rules have different applicability. There is no single automated test that certifies “all Apple standards.”</p>
+<h2 id="status-terms">Status terms</h2>
+<ul>
+<li><strong>Implemented:</strong> a concrete source/bundle change exists.</li>
+<li><strong>Checked locally:</strong> a named automated or native observation supports the specified case.</li>
+<li><strong>Pending:</strong> manual/device/account/distribution evidence still required.</li>
+<li><strong>Future feature:</strong> no implementation; requirements become applicable when built.</li>
+</ul>
+<h2 id="design-and-accessibility">Design and accessibility</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Current evidence</th>
+<th>Remaining work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Native window/navigation</td>
+<td>WindowGroup, NavigationSplitView, AppKit title bar, native sidebar</td>
+<td>Multiple-scene ownership and more screen configurations</td>
+</tr>
+<tr>
+<td>Narrow windows</td>
+<td>900×640 minimum; compact shortcut picker when detail width cannot fit library + editor</td>
+<td>Resize/locale/large-text matrix; do not equate one host with universal fit</td>
+</tr>
+<tr>
+<td>Native controls</td>
+<td>Buttons, menu/pickers, forms, file panels, sheets and text editors</td>
+<td>Full interaction review and focus order with assistive input</td>
+</tr>
+<tr>
+<td>Keyboard selection</td>
+<td>Library cards are Buttons; command menus; non-drag action movement</td>
+<td>Full Keyboard Access and VoiceOver sweep on actual devices</td>
+</tr>
+<tr>
+<td>Toolbar/menu parity</td>
+<td>New/Import/Export and Describe are menu commands; Help menu opens handbook</td>
+<td>Native toolbar customization may be expanded</td>
+</tr>
+<tr>
+<td>Accessible names</td>
+<td>Import/export/new/favorite/duplicate/output/reference/action controls labeled; selected cards announce state</td>
+<td>VoiceOver/Switch Control/Voice Control validation remains pending</td>
+</tr>
+<tr>
+<td>Status beyond color</td>
+<td>Text status, active spinner, completed icon and labels</td>
+<td>Screen-reader announcements of rapidly streaming changes</td>
+</tr>
+<tr>
+<td>Appearance</td>
+<td>Semantic native backgrounds; no custom toolbar backdrop</td>
+<td>Light/dark/increased-contrast/reduced-transparency visual matrix</td>
+</tr>
+<tr>
+<td>Custom tile contrast</td>
+<td>Opaque sRGB palette and white labels; arithmetic ratio checked in artifact validator</td>
+<td>Actual rendered pixels/font sizes/focus borders and increased-contrast review</td>
+</tr>
+<tr>
+<td>Motion</td>
+<td>Reduce Motion disables custom scroll/scale/expand transitions</td>
+<td>Real preference/device validation; no fake runtime delays</td>
+</tr>
+<tr>
+<td>Typography</td>
+<td>System text styles and native editors; some fixed-size code labels</td>
+<td>Large-text/localization/layout testing; not an iOS Dynamic Type claim</td>
+</tr>
+<tr>
+<td>Drag alternatives</td>
+<td>Options menus move/duplicate/remove complete blocks</td>
+<td>Keyboard reorder discoverability can be improved</td>
+</tr>
+<tr>
+<td>Errors/recovery</td>
+<td>Native error alerts, save/recovery banners, preserved corruption, Cancel/Stop</td>
+<td>Exhaustive denial/cancel/shutdown/low-disk paths</td>
+</tr>
+<tr>
+<td>Help/discoverability</td>
+<td>Bundled offline handbook; visible generation examples and typed input</td>
+<td>Localization and onboarding studies</td>
+</tr>
+<tr>
+<td>Original branding</td>
+<td>Independent name, original connected-node mark; no Apple app icon artwork or approval badge</td>
+<td>Layered icon variants in full Xcode/Icon Composer; flattened icon is the current asset</td>
+</tr>
+</tbody>
+</table>
+<p>Guidance: <a href="https://developer.apple.com/design/human-interface-guidelines/">HIG</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility">accessibility</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/toolbars">toolbars</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/color">color</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/keyboards">keyboards</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/focus-and-selection">focus and selection</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/app-icons">app icons</a>.</p>
+<p>This table maps our implementation to the guidance. It does not claim Apple performed a design review. Flat icons remain a supported design option; modern layered appearance work is documented as pending, not simulated as a system effect.</p>
+<h2 id="bundle-and-public-api-protocols">Bundle and public API protocols</h2>
+<table>
+<thead>
+<tr>
+<th>Contract</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Distinct bundle ID, executable/name/version/minimum OS/icon</td>
+<td>Implemented and mechanically checked</td>
+</tr>
+<tr>
+<td><code>.studio</code> ownership / JSON conformance</td>
+<td>Exported UTI + LSItemContentTypes; typed native panels implemented</td>
+</tr>
+<tr>
+<td>File-open lifecycle</td>
+<td>Application delegate forwards URLs into validated import; busy imports are not queued</td>
+</tr>
+<tr>
+<td>Public frameworks only</td>
+<td>SwiftUI/AppKit/Foundation/AVFAudio/UserNotifications/UniformTypeIdentifiers/FoundationModels; no private Apple engine API</td>
+</tr>
+<tr>
+<td>Model availability</td>
+<td>macOS 26 gate and eligibility/enabled/readiness states; actual live calls checked</td>
+</tr>
+<tr>
+<td>Parameter/result contracts</td>
+<td>Typed core; strict reference/model draft validation; versioned library/export</td>
+</tr>
+<tr>
+<td>Async cancellation</td>
+<td>Task checks, sheet cancel, speech stop, bounded CLI task; side effects not rolled back</td>
+</tr>
+<tr>
+<td>MainActor/UI ownership</td>
+<td>Explicitly isolated store/host/engine; synchronous blocking work is a known limitation</td>
+</tr>
+<tr>
+<td>Permissions</td>
+<td>Notification authorization on use; local network purpose text; Apple bridge delegates Apple's permissions</td>
+</tr>
+<tr>
+<td>ATS</td>
+<td>No global arbitrary-load exemption; HTTP can fail under system transport policy</td>
+</tr>
+<tr>
+<td>Privacy manifest</td>
+<td>Bundled no-tracking/no-developer-collection declaration; no unsubstantiated required-reason codes</td>
+</tr>
+<tr>
+<td>Local secrets</td>
+<td>No remote pairing credentials exist yet; workflow values/history are plaintext local data</td>
+</tr>
+<tr>
+<td>Logging/data minimization</td>
+<td>Bounded local logs/history; no analytics uploader; workflow content can still be personal</td>
+</tr>
+</tbody>
+</table>
+<p>The current source uses file-size resource values, not direct file-timestamp/boot-time/UserDefaults reason APIs. Audit again when those APIs or third-party SDKs are introduced. Apple's required-reason documentation specifies affected platform categories; do not generalize every iOS App Store rule to this direct macOS build. <a href="https://developer.apple.com/documentation/bundleresources/privacy-manifest-files">Privacy manifests</a>, <a href="https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api">required-reason description</a>, and <a href="https://developer.apple.com/documentation/uniformtypeidentifiers/defining-file-and-data-types-for-your-app">formal file types</a> are the reference points.</p>
+<h2 id="distribution-channels-and-release-gates">Distribution channels and release gates</h2>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Requirement / current status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This local build</td>
+<td>Ad hoc signature + hardened runtime and strict signature check; app has been launched locally</td>
+</tr>
+<tr>
+<td>Public direct download</td>
+<td>Developer ID Application identity, hardened runtime, secure timestamp, accepted notarization, stapled ticket, Gatekeeper assessment; account/hardware checks pending</td>
+</tr>
+<tr>
+<td>Mac App Store</td>
+<td>Sandbox plus appropriate entitlements, store metadata/privacy answers, assets and App Review; not configured/submitted</td>
+</tr>
+<tr>
+<td>Shared public source</td>
+<td>License/ownership choice and actual release hosting; both unconfigured by the owner's current local-download decision</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://developer.apple.com/documentation/xcode/preparing-your-app-for-distribution">Preparing distribution</a> distinguishes optional sandboxing for direct notarized distribution from the App Store sandbox requirement. <a href="https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution">Notarization</a> describes signing/hardened runtime/timestamp/ticket requirements. Notarization is not App Review.</p>
+<p>Do not enable sandboxing as a metadata-only “compliance” change. The app currently reads explicitly authored paths and invokes a system CLI. A sandboxed edition needs security-scoped resource design, entitlement review and actual compatibility testing; those can change its functionality.</p>
+<h2 id="originality-and-policy">Originality and policy</h2>
+<p>Apple's <a href="https://developer.apple.com/app-store/review/guidelines/">App Review Guidelines</a> include accurate functionality/metadata, public API use and copycat/impersonation rules. Familiar workflow concepts and native controls should coexist with distinct branding and honest capability descriptions. This app is not an Apple product and must not use an “Apple approved,” App Store, or full-parity badge without evidence. No App Review outcome is guaranteed by this audit.</p>
+<h2 id="manual-acceptance-checklist">Manual acceptance checklist</h2>
+<p>Before a public release, record device/OS/build and result for:</p>
+<ol>
+<li>Keyboard-only library/editor/forms/menu/dialog navigation; visible focus and no traps.</li>
+<li>VoiceOver names, order, selection, disabled controls, errors and live progress; avoid continuous verbose speech from every snapshot.</li>
+<li>Switch Control/Voice Control operation without drag gestures.</li>
+<li>Light/dark, Increase Contrast, Reduce Motion, Reduce Transparency, text enlargement, smaller displays and long/localized labels.</li>
+<li>Open/Save Cancel, permissions denied/revoked, app missing, unsupported model, network/ATS failure, file-size/encoding/low-disk failure.</li>
+<li>Closing every window, reopen, quitting during running tasks, recovery after interruption, multiple windows and sleep/wake.</li>
+<li>File association from Finder; only <code>.studio</code> documents claim this app; native Apple documents still route to Apple.</li>
+<li>Developer ID signatures, accepted notarization, ticket validation, clean-machine Gatekeeper install and first launch.</li>
+<li>Sandboxed capabilities and App Review requirements only if that channel is selected.</li>
+<li>Android permission/pairing/revocation/transport tests only after the proposed companion is implemented.</li>
+</ol>
+<p><strong>Current conclusion:</strong> applicable local improvements and a compliance process are implemented; universal end-to-end Apple compliance is <strong>not established</strong>. External distribution and manual accessibility gates are explicit outstanding work.</p>
+<h2 id="030-accessibility-based-app-control">0.3.0 Accessibility-based app control</h2>
+<p>The optional approved app-control action uses public ApplicationServices AXUIElement APIs and targeted Unicode keyboard events. AX trust is checked; the user must enable the app in macOS privacy settings. On this host's macOS 27, the visible permission panel is Device Control and Data Access. Native assistive Accessibility preferences and Files &amp; Folders are separate. Desktop filename access uses its own macOS filesystem privacy decision. Broad compatibility with arbitrary third-party app accessibility trees is not established.</p>
+<h2 id="liquid-glass-adoption-14-october-2026">Liquid Glass adoption — 14 October 2026</h2>
+<p>The native Mac control layer now uses real SwiftUI APIs: <code>.glass</code>, <code>.glassProminent</code>, <code>GlassEffectContainer</code>, and <code>.glassEffect(.regular.interactive(), in: .circle)</code>. The editor groups Favorite, Duplicate and Run/Stop; the output toggle uses a custom circular glass surface. Messenger Done/Connect/Pairing and New Automation use native glass button styles. The system toolbar and sidebar retain standard SwiftUI behavior. Workflow tiles, action cards, text editors and output bodies retain standard content surfaces.</p>
+<p><code>StudioGlass.swift</code> gates APIs at macOS 26. Reduced Transparency or Increased Contrast selects bordered opaque controls; earlier macOS uses the same fallback. No new custom animation loop or model calls were added. Existing labels and disabled states remain. Release compilation, packaging checks, live launch and the default dark editor were inspected. Light appearance, accessibility settings on actual hardware, older OS runtime and Instruments rendering costs were not separately measured. This adoption does not certify complete HIG compliance.</p>
+<p>References: <a href="https://developer.apple.com/documentation/swiftui/applying-liquid-glass-to-custom-views">custom Liquid Glass</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/materials">HIG materials</a>.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

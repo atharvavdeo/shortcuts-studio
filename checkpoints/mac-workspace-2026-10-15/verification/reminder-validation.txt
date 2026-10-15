@@ -1,0 +1,5 @@
+Core: 35 tests in 7 suites passed, including explicitReminder parsing.
+Native Mac: one-time 14 October 2026 11:00 Asia/Kolkata request registered and pending request nextTriggerDate read back before 11:00.
+User did not confirm banner. Later app status after rebuild/relaunch: authorized, alerts enabled, Notification Centre enabled; pending=0 delivered=0. Scheduled visible delivery remains unverified; cause not established.
+User changed request to show now. Native Text -> Show Result shortcut executed; AX confirmed visible Result sheet containing exact text Good Morning! Lets rock this day.
+No model inference used. Codex fallback reminder paused. No daily repeat installed for this user.

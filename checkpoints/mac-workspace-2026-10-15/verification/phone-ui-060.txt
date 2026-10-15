@@ -1,0 +1,7 @@
+Isolated browser fixture, no app or folder permissions.
+PASS create persists shortcut on Mac fixture
+PASS execute returns Completed and actual model status
+PASS edit loads command and updates same shortcut
+PASS refresh retains pairing and edited workflow
+PASS Turn AI off returns Studio model use: off
+Live Mac: 0.6 connected, AI checkbox off, Assistant sharing checkbox checked by user. App Control unavailable. Physical Android hosted-origin: user confirmed Documents list shortcut saved and ran successfully with Studio AI off. New-origin push notification display remains separate.

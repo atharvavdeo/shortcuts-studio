@@ -1,0 +1,15 @@
+{
+  "Sources/WorkflowCore/AutomationSchedule.swift": "2373626a94a14a188e0e6fb2eb484d539f0a9c443eb30a7a87672ec377b89e10",
+  "Sources/WorkflowCore/Catalog.swift": "7794fab684cc3f9548e8f07a6b6b63906f5f921bda9bd60de7d2de846bbcae9d",
+  "Sources/WorkflowCore/Engine.swift": "872c25b2924cea221890b1766dfb6038698298ec65b9f7ee409b78d490fe4b00",
+  "Sources/WorkflowCore/ModelDraft.swift": "5c4abaf94eb4356f0dc58005b4765c90fae0202fa8977431f70cb71830684d19",
+  "Sources/WorkflowCore/Models.swift": "2ea909517cce3d04028bfd9902d5d01f2e9eff31d53214044f87297ceb376e57",
+  "Sources/WorkflowCore/Persistence.swift": "e1aaf66274cb1918d161c4a259ff16cab79d4f3cd62f93b1ce19d2c5224055e1",
+  "Sources/WorkflowCore/ReminderRequest.swift": "a0475439b4b53a35539e00501fe2103d64966bc5e2cdd43d0ee4cd42e22deb0c",
+  "Sources/WorkflowCore/WorkflowEdits.swift": "18bb697f96c35ce48078f209fac5803cb658cb373862c67fb5d23c695de180a1",
+  "scripts/export-reference.swift": "6747898bb715eeed918d14b901f6fc0e411cf82c4a3250566877abc792a4f06c",
+  "scripts/generate-reference.sh": "e1d3b3c36ab614fa515377f2cee094dd563f8ae31e2a7dda8650c1718a732340",
+  "docs/ACTION_REFERENCE.md": "1a0426316b99b2cb41b2ebc452fe4939403cb1b3e824ade7ddaf3368d11e243b",
+  "docs/action-catalog.json": "3eb6f3b4e1b01c02bb93b9c290261d3a0c1a972d2b5bd9da962b5662be33922f",
+  "docs/workflow-value-encoding.json": "80db6dc515953c0540656ec7a6f6726c2e1782867ea3e01243aecfd5824213e0"
+}

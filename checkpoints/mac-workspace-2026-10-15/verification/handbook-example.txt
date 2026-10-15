@@ -1,0 +1,34 @@
+Building for debugging...
+[Planning deferred tasks]
+[23 / 38]
+[24 / 39] WorkflowCore
+[33 / 99]
+[37 / 99]
+[42 / 99]
+[44 / 99]
+[48 / 99]
+[51 / 99]
+[56 / 99]
+[57 / 99]
+[58 / 99]
+[59 / 99]
+[66 / 99]
+[67 / 99]
+[71 / 99]
+[72 / 99]
+[74 / 99]
+[76 / 99]
+[84 / 99] WorkflowCore
+[93 / 100]
+[96 / 102] EngineClient-product
+[97 / 102] WorkflowCore
+/Users/atharvadeo/Documents/Apple Word/ShortcutStudio/Package.swift: WorkflowCore: ld: warning: search path '/Library/Developer/CommandLineTools/Developer/Library/Frameworks' not found
+/Users/atharvadeo/Documents/Apple Word/ShortcutStudio/examples/EngineClient/Package.swift: EngineClient-product: ld: warning: search path '/Library/Developer/CommandLineTools/Developer/usr/lib' not found
+/Users/atharvadeo/Documents/Apple Word/ShortcutStudio/examples/EngineClient/Package.swift: EngineClient-product: ld: warning: search path '/Library/Developer/CommandLineTools/Developer/Library/Frameworks' not found
+[100 / 102] EngineClient-product
+Build complete! (19.74 secs)
+→ Text
+  Text: Hello, world!
+→ Change Case
+  Text: HELLO, WORLD!
+EXAMPLE PASS: HELLO, WORLD!

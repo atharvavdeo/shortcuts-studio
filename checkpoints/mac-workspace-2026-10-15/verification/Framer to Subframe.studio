@@ -1,0 +1,41 @@
+{
+  "format": "studio.shortcut",
+  "version": 1,
+  "workflow": {
+    "id": "11B32B6A-013A-44A5-8E66-907218AC185D",
+    "name": "Framer to Subframe",
+    "symbol": "app.badge",
+    "color": "blue",
+    "actions": [
+      {
+        "id": "F279EA04-67AC-49A7-A8DD-629B9CBF28D7",
+        "kind": "url",
+        "parameters": {
+          "url": "https://framer.com/"
+        },
+        "isEnabled": true
+      },
+      {
+        "id": "ED384BA1-E3E1-4A0C-821C-444D8562A141",
+        "kind": "openURL",
+        "parameters": {
+          "input": "{{previous}}",
+          "bundle": "com.google.Chrome"
+        },
+        "isEnabled": true
+      },
+      {
+        "id": "51D2B62A-90D0-460F-A16C-BBCDE13D0410",
+        "kind": "openApp",
+        "parameters": {
+          "bundle": "com.subframe.desktop"
+        },
+        "isEnabled": true
+      }
+    ],
+    "storage": {},
+    "questions": [],
+    "isFavorite": false,
+    "updatedAt": 813593874.4712079
+  }
+}

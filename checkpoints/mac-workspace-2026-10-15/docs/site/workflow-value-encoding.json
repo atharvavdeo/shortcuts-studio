@@ -1,0 +1,49 @@
+{
+  "boolean" : {
+    "bool" : {
+      "_0" : true
+    }
+  },
+  "dictionary" : {
+    "dictionary" : {
+      "_0" : {
+        "name" : {
+          "text" : {
+            "_0" : "World"
+          }
+        }
+      }
+    }
+  },
+  "list" : {
+    "list" : {
+      "_0" : [
+        {
+          "text" : {
+            "_0" : "One"
+          }
+        },
+        {
+          "number" : {
+            "_0" : 2
+          }
+        }
+      ]
+    }
+  },
+  "nothing" : {
+    "null" : {
+
+    }
+  },
+  "number" : {
+    "number" : {
+      "_0" : 3
+    }
+  },
+  "text" : {
+    "text" : {
+      "_0" : "Hello"
+    }
+  }
+}

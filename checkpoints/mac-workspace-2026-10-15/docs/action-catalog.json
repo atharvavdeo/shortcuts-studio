@@ -1,0 +1,1471 @@
+[
+  {
+    "category" : "Intelligence",
+    "description" : "Stream text from Apple’s on-device Foundation Model. Requires available Apple Intelligence; no cloud fallback.",
+    "kind" : "onDeviceModel",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Summarize: {{previous}}",
+        "key" : "prompt",
+        "title" : "Prompt"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Be concise and accurate.",
+        "key" : "instructions",
+        "title" : "Instructions"
+      }
+    ],
+    "symbol" : "sparkles",
+    "title" : "Use On-Device Model"
+  },
+  {
+    "category" : "Intelligence",
+    "description" : "Route a phone command through Apple on-device intelligence to approved Mac tasks or an answer. App control requires Accessibility permission.",
+    "kind" : "phoneAssistant",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{input}}",
+        "key" : "prompt",
+        "title" : "Command or question"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "com.openai.codex,com.openai.chat,com.google.Chrome,com.subframe.desktop,com.apple.finder,com.apple.calculator,com.apple.weather",
+        "key" : "applications",
+        "title" : "Approved application bundle IDs"
+      },
+      {
+        "choices" : [
+          "true",
+          "false"
+        ],
+        "defaultValue" : "true",
+        "key" : "desktop",
+        "title" : "Allow Desktop filenames"
+      }
+    ],
+    "symbol" : "bubble.left.and.bubble.right",
+    "title" : "Phone Assistant"
+  },
+  {
+    "category" : "Mac",
+    "description" : "List visible Desktop filenames, up to 200 entries; no file contents or arbitrary paths.",
+    "kind" : "desktopNames",
+    "parameters" : [
+
+    ],
+    "symbol" : "desktopcomputer",
+    "title" : "Get Desktop File Names"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Open, inspect, type into, or submit text to the configured app using public Accessibility APIs.",
+    "kind" : "appControl",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "com.openai.chat",
+        "key" : "bundle",
+        "title" : "Application bundle ID"
+      },
+      {
+        "choices" : [
+          "open",
+          "inspect",
+          "type",
+          "send"
+        ],
+        "defaultValue" : "inspect",
+        "key" : "operation",
+        "title" : "Operation"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{input}}",
+        "key" : "text",
+        "title" : "Text"
+      }
+    ],
+    "symbol" : "macwindow",
+    "title" : "Control Application"
+  },
+  {
+    "category" : "Text",
+    "description" : "Create text. Insert variables using the reference picker.",
+    "kind" : "text",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Hello, world!",
+        "key" : "text",
+        "title" : "Text"
+      }
+    ],
+    "symbol" : "text.alignleft",
+    "title" : "Text"
+  },
+  {
+    "category" : "Numbers",
+    "description" : "Create a finite numeric value.",
+    "kind" : "number",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "1",
+        "key" : "number",
+        "title" : "Number"
+      }
+    ],
+    "symbol" : "number",
+    "title" : "Number"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Create true or false.",
+    "kind" : "boolean",
+    "parameters" : [
+      {
+        "choices" : [
+          "true",
+          "false"
+        ],
+        "defaultValue" : "true",
+        "key" : "value",
+        "title" : "Value"
+      }
+    ],
+    "symbol" : "switch.2",
+    "title" : "Boolean"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Document a step without changing its output.",
+    "kind" : "comment",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "text",
+        "title" : "Comment"
+      }
+    ],
+    "symbol" : "text.bubble",
+    "title" : "Comment"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Get the input supplied when this shortcut starts.",
+    "kind" : "input",
+    "parameters" : [
+
+    ],
+    "symbol" : "tray.and.arrow.down",
+    "title" : "Shortcut Input"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Store a typed value for this run.",
+    "kind" : "setVariable",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Value",
+        "key" : "name",
+        "title" : "Name"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "v.square",
+    "title" : "Set Variable"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Retrieve a named variable.",
+    "kind" : "getVariable",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Value",
+        "key" : "name",
+        "title" : "Name"
+      }
+    ],
+    "symbol" : "v.square.fill",
+    "title" : "Get Variable"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Run a block when its condition is true.",
+    "kind" : "if",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+          "has value",
+          "equals",
+          "not equals",
+          "contains",
+          "greater than",
+          "less than",
+          "is true"
+        ],
+        "defaultValue" : "has value",
+        "key" : "comparison",
+        "title" : "Condition"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "value",
+        "title" : "Compare to"
+      }
+    ],
+    "symbol" : "arrow.triangle.branch",
+    "title" : "If"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Alternate branch of the current If block.",
+    "kind" : "else",
+    "parameters" : [
+
+    ],
+    "symbol" : "arrow.turn.down.right",
+    "title" : "Otherwise"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Close the current If block.",
+    "kind" : "endIf",
+    "parameters" : [
+
+    ],
+    "symbol" : "arrow.turn.up.left",
+    "title" : "End If"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Repeat the block and collect its outputs.",
+    "kind" : "repeat",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "3",
+        "key" : "count",
+        "title" : "Times"
+      }
+    ],
+    "symbol" : "repeat",
+    "title" : "Repeat"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Run the block for every item. Use Repeat Item and Repeat Index.",
+    "kind" : "repeatEach",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "repeat.circle",
+    "title" : "Repeat with Each"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Close the current Repeat block.",
+    "kind" : "endRepeat",
+    "parameters" : [
+
+    ],
+    "symbol" : "arrow.turn.up.left",
+    "title" : "End Repeat"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Pause cooperatively; Stop cancels the wait.",
+    "kind" : "wait",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "1",
+        "key" : "seconds",
+        "title" : "Seconds"
+      }
+    ],
+    "symbol" : "clock",
+    "title" : "Wait"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "End this shortcut and return the selected value.",
+    "kind" : "stop",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "stop.circle",
+    "title" : "Stop and Output"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Run another Studio shortcut by name or identifier.",
+    "kind" : "runWorkflow",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "workflow",
+        "title" : "Shortcut"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "square.stack.3d.up",
+    "title" : "Run Shortcut"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Show a text prompt. Cancel stops the run.",
+    "kind" : "ask",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "What is your name?",
+        "key" : "prompt",
+        "title" : "Prompt"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "default",
+        "title" : "Default answer"
+      }
+    ],
+    "symbol" : "questionmark.bubble",
+    "title" : "Ask for Input"
+  },
+  {
+    "category" : "Lists",
+    "description" : "Ask the user to select one list item.",
+    "kind" : "choose",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Choose an item",
+        "key" : "prompt",
+        "title" : "Prompt"
+      }
+    ],
+    "symbol" : "list.bullet.rectangle",
+    "title" : "Choose from List"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Present a result in a native dialog.",
+    "kind" : "show",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "eye",
+    "title" : "Show Result"
+  },
+  {
+    "category" : "Scripting",
+    "description" : "Display an alert and continue with the existing input.",
+    "kind" : "alert",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Shortcut",
+        "key" : "title",
+        "title" : "Title"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "message",
+        "title" : "Message"
+      }
+    ],
+    "symbol" : "exclamationmark.bubble",
+    "title" : "Show Alert"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Post a system notification when permission is granted.",
+    "kind" : "notification",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Shortcut Studio",
+        "key" : "title",
+        "title" : "Title"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "message",
+        "title" : "Message"
+      }
+    ],
+    "symbol" : "bell",
+    "title" : "Show Notification"
+  },
+  {
+    "category" : "Text",
+    "description" : "Change the case of text.",
+    "kind" : "uppercase",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+          "uppercase",
+          "lowercase",
+          "title case"
+        ],
+        "defaultValue" : "uppercase",
+        "key" : "case",
+        "title" : "Case"
+      }
+    ],
+    "symbol" : "textformat",
+    "title" : "Change Case"
+  },
+  {
+    "category" : "Text",
+    "description" : "Remove whitespace at both ends.",
+    "kind" : "trim",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "textformat.size",
+    "title" : "Trim Whitespace"
+  },
+  {
+    "category" : "Text",
+    "description" : "Replace literal text or a regular expression.",
+    "kind" : "replace",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "find",
+        "title" : "Find"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "replacement",
+        "title" : "Replace with"
+      },
+      {
+        "choices" : [
+          "false",
+          "true"
+        ],
+        "defaultValue" : "false",
+        "key" : "regex",
+        "title" : "Regular expression"
+      }
+    ],
+    "symbol" : "arrow.left.arrow.right",
+    "title" : "Replace Text"
+  },
+  {
+    "category" : "Text",
+    "description" : "Find regex matches as a list.",
+    "kind" : "match",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "\\w+",
+        "key" : "pattern",
+        "title" : "Pattern"
+      }
+    ],
+    "symbol" : "magnifyingglass",
+    "title" : "Match Text"
+  },
+  {
+    "category" : "Text",
+    "description" : "Split text using a literal separator.",
+    "kind" : "split",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "\\n",
+        "key" : "separator",
+        "title" : "Separator"
+      }
+    ],
+    "symbol" : "text.line.first.and.arrowtriangle.forward",
+    "title" : "Split Text"
+  },
+  {
+    "category" : "Text",
+    "description" : "Join list items with a separator.",
+    "kind" : "combine",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "\\n",
+        "key" : "separator",
+        "title" : "Separator"
+      }
+    ],
+    "symbol" : "text.append",
+    "title" : "Combine Text"
+  },
+  {
+    "category" : "Text",
+    "description" : "Convert UTF-8 text to or from Base64.",
+    "kind" : "base64",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+          "encode",
+          "decode"
+        ],
+        "defaultValue" : "encode",
+        "key" : "mode",
+        "title" : "Mode"
+      }
+    ],
+    "symbol" : "chevron.left.forwardslash.chevron.right",
+    "title" : "Base64 Encode \/ Decode"
+  },
+  {
+    "category" : "Web",
+    "description" : "Percent-encode text or decode percent escapes.",
+    "kind" : "urlEncode",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+          "encode",
+          "decode"
+        ],
+        "defaultValue" : "encode",
+        "key" : "mode",
+        "title" : "Mode"
+      }
+    ],
+    "symbol" : "link",
+    "title" : "URL Encode \/ Decode"
+  },
+  {
+    "category" : "Numbers",
+    "description" : "Apply an arithmetic operation to two numbers.",
+    "kind" : "calculate",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "a",
+        "title" : "First number"
+      },
+      {
+        "choices" : [
+          "+",
+          "-",
+          "×",
+          "÷",
+          "mod",
+          "power"
+        ],
+        "defaultValue" : "+",
+        "key" : "operation",
+        "title" : "Operation"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "1",
+        "key" : "b",
+        "title" : "Second number"
+      }
+    ],
+    "symbol" : "plus.forwardslash.minus",
+    "title" : "Calculate"
+  },
+  {
+    "category" : "Numbers",
+    "description" : "Round to a specified decimal precision.",
+    "kind" : "round",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "0",
+        "key" : "places",
+        "title" : "Decimal places"
+      }
+    ],
+    "symbol" : "number.square",
+    "title" : "Round Number"
+  },
+  {
+    "category" : "Numbers",
+    "description" : "Generate an integer in an inclusive range.",
+    "kind" : "random",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "1",
+        "key" : "min",
+        "title" : "Minimum"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "100",
+        "key" : "max",
+        "title" : "Maximum"
+      }
+    ],
+    "symbol" : "dice",
+    "title" : "Random Number"
+  },
+  {
+    "category" : "Numbers",
+    "description" : "Compute statistics over a numeric list.",
+    "kind" : "statistics",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+          "sum",
+          "average",
+          "minimum",
+          "maximum",
+          "count"
+        ],
+        "defaultValue" : "sum",
+        "key" : "statistic",
+        "title" : "Statistic"
+      }
+    ],
+    "symbol" : "sum",
+    "title" : "Calculate Statistics"
+  },
+  {
+    "category" : "Lists",
+    "description" : "Create a list with one text item per line.",
+    "kind" : "list",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "One\nTwo\nThree",
+        "key" : "items",
+        "title" : "Items"
+      }
+    ],
+    "symbol" : "list.bullet",
+    "title" : "List"
+  },
+  {
+    "category" : "Lists",
+    "description" : "Count items, words, or characters.",
+    "kind" : "count",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+          "items",
+          "words",
+          "characters"
+        ],
+        "defaultValue" : "items",
+        "key" : "unit",
+        "title" : "Count"
+      }
+    ],
+    "symbol" : "number.circle",
+    "title" : "Count"
+  },
+  {
+    "category" : "Lists",
+    "description" : "Retrieve a one-based item, first item, last item, or random item.",
+    "kind" : "getItem",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "1",
+        "key" : "index",
+        "title" : "Index"
+      }
+    ],
+    "symbol" : "list.number",
+    "title" : "Get Item from List"
+  },
+  {
+    "category" : "Lists",
+    "description" : "Sort items as text or numeric values.",
+    "kind" : "sort",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+          "ascending",
+          "descending"
+        ],
+        "defaultValue" : "ascending",
+        "key" : "order",
+        "title" : "Order"
+      },
+      {
+        "choices" : [
+          "text",
+          "number"
+        ],
+        "defaultValue" : "text",
+        "key" : "type",
+        "title" : "Compare"
+      }
+    ],
+    "symbol" : "arrow.up.arrow.down",
+    "title" : "Sort List"
+  },
+  {
+    "category" : "Lists",
+    "description" : "Reverse item order.",
+    "kind" : "reverse",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "arrow.uturn.backward",
+    "title" : "Reverse List"
+  },
+  {
+    "category" : "Lists",
+    "description" : "Keep the first occurrence of each typed value.",
+    "kind" : "unique",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "line.3.horizontal.decrease",
+    "title" : "Remove Duplicates"
+  },
+  {
+    "category" : "Lists",
+    "description" : "Keep text items containing a string.",
+    "kind" : "filter",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "contains",
+        "title" : "Contains"
+      }
+    ],
+    "symbol" : "line.3.horizontal.decrease.circle",
+    "title" : "Filter List"
+  },
+  {
+    "category" : "Dictionaries",
+    "description" : "Create a dictionary from JSON.",
+    "kind" : "dictionary",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{\"name\":\"World\"}",
+        "key" : "json",
+        "title" : "JSON"
+      }
+    ],
+    "symbol" : "curlybraces",
+    "title" : "Dictionary"
+  },
+  {
+    "category" : "Dictionaries",
+    "description" : "Parse JSON into typed values.",
+    "kind" : "parseJSON",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "curlybraces.square",
+    "title" : "Get Dictionary from Input"
+  },
+  {
+    "category" : "Dictionaries",
+    "description" : "Follow a dot-separated dictionary key path.",
+    "kind" : "getValue",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "name",
+        "key" : "key",
+        "title" : "Key"
+      }
+    ],
+    "symbol" : "key",
+    "title" : "Get Dictionary Value"
+  },
+  {
+    "category" : "Dictionaries",
+    "description" : "Set a top-level key on a copy of the dictionary.",
+    "kind" : "setValue",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "name",
+        "key" : "key",
+        "title" : "Key"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "World",
+        "key" : "value",
+        "title" : "Value"
+      }
+    ],
+    "symbol" : "key.fill",
+    "title" : "Set Dictionary Value"
+  },
+  {
+    "category" : "Dictionaries",
+    "description" : "Return dictionary keys in sorted order.",
+    "kind" : "keys",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "list.bullet.indent",
+    "title" : "Get Dictionary Keys"
+  },
+  {
+    "category" : "Dictionaries",
+    "description" : "Serialize a typed value to JSON.",
+    "kind" : "json",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "chevron.left.forwardslash.chevron.right",
+    "title" : "Convert to JSON"
+  },
+  {
+    "category" : "Web",
+    "description" : "Create and validate an HTTP or HTTPS URL.",
+    "kind" : "url",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "https:\/\/example.com",
+        "key" : "url",
+        "title" : "URL"
+      }
+    ],
+    "symbol" : "link.circle",
+    "title" : "URL"
+  },
+  {
+    "category" : "Web",
+    "description" : "Make an HTTP request; unsuccessful responses fail the run.",
+    "kind" : "http",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "url",
+        "title" : "URL"
+      },
+      {
+        "choices" : [
+          "GET",
+          "POST",
+          "PUT",
+          "PATCH",
+          "DELETE"
+        ],
+        "defaultValue" : "GET",
+        "key" : "method",
+        "title" : "Method"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{}",
+        "key" : "headers",
+        "title" : "Headers (JSON)"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "body",
+        "title" : "Request body"
+      },
+      {
+        "choices" : [
+          "text",
+          "json"
+        ],
+        "defaultValue" : "text",
+        "key" : "response",
+        "title" : "Response"
+      }
+    ],
+    "symbol" : "network",
+    "title" : "Get Contents of URL"
+  },
+  {
+    "category" : "Web",
+    "description" : "Open a URL in the default app or a chosen browser\/application.",
+    "kind" : "openURL",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "bundle",
+        "title" : "Application bundle ID (optional)"
+      }
+    ],
+    "symbol" : "safari",
+    "title" : "Open URL"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Return the current timestamp in ISO 8601 format.",
+    "kind" : "date",
+    "parameters" : [
+
+    ],
+    "symbol" : "calendar",
+    "title" : "Current Date"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Format an ISO 8601 timestamp.",
+    "kind" : "formatDate",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "EEEE, d MMMM yyyy",
+        "key" : "format",
+        "title" : "Date format"
+      }
+    ],
+    "symbol" : "calendar.badge.clock",
+    "title" : "Format Date"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Read text from the system clipboard.",
+    "kind" : "clipboard",
+    "parameters" : [
+
+    ],
+    "symbol" : "doc.on.clipboard",
+    "title" : "Get Clipboard"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Copy text to the system clipboard.",
+    "kind" : "copy",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "doc.on.doc",
+    "title" : "Copy to Clipboard"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Open an app using its bundle identifier.",
+    "kind" : "openApp",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "com.apple.Safari",
+        "key" : "bundle",
+        "title" : "Bundle identifier"
+      }
+    ],
+    "symbol" : "app.badge",
+    "title" : "Open App"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Read text aloud using system speech.",
+    "kind" : "speak",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "speaker.wave.2",
+    "title" : "Speak Text"
+  },
+  {
+    "category" : "Files",
+    "description" : "Choose a file using a native open panel.",
+    "kind" : "selectFile",
+    "parameters" : [
+
+    ],
+    "symbol" : "folder",
+    "title" : "Select File"
+  },
+  {
+    "category" : "Files",
+    "description" : "Read a UTF-8 file, limited to 10 MB.",
+    "kind" : "readFile",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "path",
+        "title" : "File path"
+      }
+    ],
+    "symbol" : "doc.text",
+    "title" : "Read Text File"
+  },
+  {
+    "category" : "Files",
+    "description" : "Choose where to save text using a native save panel.",
+    "kind" : "saveFile",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "Result.txt",
+        "key" : "name",
+        "title" : "Suggested filename"
+      }
+    ],
+    "symbol" : "square.and.arrow.down",
+    "title" : "Save Text File"
+  },
+  {
+    "category" : "Files",
+    "description" : "Return file name, size, extension, and path.",
+    "kind" : "fileInfo",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "path",
+        "title" : "File path"
+      }
+    ],
+    "symbol" : "doc.badge.gearshape",
+    "title" : "Get File Details"
+  },
+  {
+    "category" : "Storage",
+    "description" : "Get a value persisted across runs of this shortcut.",
+    "kind" : "storageGet",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "counter",
+        "key" : "key",
+        "title" : "Key"
+      }
+    ],
+    "symbol" : "externaldrive",
+    "title" : "Get Stored Value"
+  },
+  {
+    "category" : "Storage",
+    "description" : "Persist a value immediately; cancellation does not undo committed writes.",
+    "kind" : "storageSet",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "counter",
+        "key" : "key",
+        "title" : "Key"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "externaldrive.fill",
+    "title" : "Set Stored Value"
+  },
+  {
+    "category" : "Storage",
+    "description" : "Remove a stored key from this shortcut.",
+    "kind" : "storageDelete",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "counter",
+        "key" : "key",
+        "title" : "Key"
+      }
+    ],
+    "symbol" : "externaldrive.badge.minus",
+    "title" : "Remove Stored Value"
+  },
+  {
+    "category" : "Mac",
+    "description" : "Delegate to Apple's installed engine by shortcut name or identifier.",
+    "kind" : "appleShortcut",
+    "parameters" : [
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "",
+        "key" : "shortcut",
+        "title" : "Apple shortcut"
+      },
+      {
+        "choices" : [
+
+        ],
+        "defaultValue" : "{{previous}}",
+        "key" : "input",
+        "title" : "Input"
+      }
+    ],
+    "symbol" : "square.stack.3d.up.fill",
+    "title" : "Run Apple Shortcut"
+  }
+]

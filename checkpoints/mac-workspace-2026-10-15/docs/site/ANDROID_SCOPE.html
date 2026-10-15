@@ -1,0 +1,140 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Android messenger gateway: scope and evaluation — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="android-messenger-gateway-scope-and-evaluation">Android messenger gateway: scope and evaluation</h1>
+<p><strong>Status: browser companion, Mac connector and single-owner test gateway implemented in 0.2.0. Native Android and permanent cloud hosting remain future work.</strong> See the <a href="MESSENGER_GUIDE.html">messenger guide</a> for the runnable subset and its limits. The owner selected an internet-reachable relay and approved Mac workflows, with AI only when a workflow needs it. This replaces the earlier LAN-first controller proposal.</p>
+<h2 id="command-and-response-architecture">Command and response architecture</h2>
+<p>An Android companion sends a message identifying an owner-approved workflow and optional Text input. A gateway authenticates the paired devices, routes the command to an outbound-connected Mac, and returns execution status and the result. The Mac validates its own workflow grants before executing. The gateway is a messenger and delivery coordinator. It has no model inference endpoint and cannot upload executable actions to the Mac.</p>
+<p>Apple Foundation Models runs on the eligible Mac only when the chosen workflow contains an on-device model action. Opening Chrome, launching Subframe and deterministic text transformations need no model. A future free-text command selector would require its own explicit scope and review; selecting a fixed workflow does not require AI reasoning.</p>
+<figure class="diagram"><img src="assets/android-architecture.svg" alt="Android Scope overview"/><figcaption>Rendered overview; editable Mermaid source is in the chapter Markdown.</figcaption></figure><details class="diagram"><summary>Editable diagram source</summary><pre><code>flowchart LR
+    Phone[Android: workflow and text] --&gt; Relay[Internet messenger gateway]
+    Mac[Mac: outbound authenticated connection] --&gt; Relay
+    Relay --&gt; Gate[Mac grants and immutable revision validation]
+    Gate --&gt; Run[Existing workflow engine]
+    Run --&gt; Optional[macOS actions; model only if needed]
+    Run --&gt; Result[Run status and bounded result]
+    Result --&gt; Relay
+    Relay --&gt; Phone
+    Relay --&gt; Push[Notification hint]
+    Push --&gt; Phone
+</code></pre></details>
+<p>No inbound Mac port forwarding is required by this design. Both clients connect over authenticated encrypted internet connections. An asleep, offline or stopped Mac cannot execute. Local-network discovery becomes an optional later convenience, with its own OS permission rules.</p>
+<h2 id="responsibilities">Responsibilities</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Owns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Android companion</td>
+<td>Workflow selection, bounded text, send/stop, readable run conversation, notification preferences and device credential</td>
+</tr>
+<tr>
+<td>Gateway</td>
+<td>Paired routing, expiring delivery records, presence heartbeat, deduplication, bounded event storage, push token lifecycle and rate limits</td>
+</tr>
+<tr>
+<td>Mac connector</td>
+<td>Outbound reconnect, authenticated device identity, command expiry/revocation checks, receipt acknowledgments and run event upload</td>
+</tr>
+<tr>
+<td>Mac coordinator</td>
+<td>Per-phone workflow grants, revision validation, durable acceptance, serialized execution, cancellation and terminal result</td>
+</tr>
+<tr>
+<td>Existing engine/host</td>
+<td>Authored action behavior and permission checks; optional on-device inference</td>
+</tr>
+</tbody>
+</table>
+<p>Gateway receipt means <strong>Sent</strong>, not Mac acceptance. Presence is a recent heartbeat, not a guarantee of immediate execution. The Mac owns the authoritative run journal and authorization; a relay compromise must not grant new execution authority. End-to-end authenticated payload protection between paired phone and Mac is the proposed confidentiality boundary. Select a reviewed cryptographic protocol/library during the transport spike; do not invent cryptography or claim this protection is implemented.</p>
+<h2 id="notification-and-conversation-ux">Notification and conversation UX</h2>
+<ul>
+<li>Tap a shared workflow, type input, and Send. Show <code>Sending → Sent to gateway → Accepted by Mac → Running → Completed</code>.</li>
+<li>Running shows the workflow name and current safe status. Foreground model output replaces cumulative snapshots, avoiding repeated text.</li>
+<li>Completion card contains the workflow name, readable result, timestamp and <strong>Open result</strong> / <strong>Copy</strong> actions. Opening Chrome can return “Search opened on your Mac”; it must not claim the web page finished loading without a separate observation.</li>
+<li>One Android notification per terminal run, updated under a stable run notification ID. Suggested default: “Shortcut completed — Open to view result.” Sensitive full text stays hidden from the lock screen unless the owner enables previews.</li>
+<li>A notification tap opens the exact authenticated run and fetches the stored result. It never repeats execution. Notification denial leaves results available in the app inbox.</li>
+<li>For long runs, show progress inside the app; avoid token-by-token push notifications. Cancellation displays “Stop requested” until the Mac acknowledges the terminal outcome.</li>
+<li>Mac offline/asleep: show <strong>Mac unavailable</strong>. First version rejects sending for execution when the Mac is unavailable rather than silently running hours later. Commands expire; queueing for later execution requires a separate explicit user feature.</li>
+<li>Needs Local Attention gives a readable reason, such as a Mac permission/dialog, and does not approve it remotely.</li>
+</ul>
+<p>Android 13+ requires <code>POST_NOTIFICATIONS</code> for ordinary notifications. Request it when the owner enables completion alerts, and respect denial/channel settings. <a href="https://developer.android.com/develop/ui/views/notifications/notification-permission">Android notification permission</a>.</p>
+<p>For internet delivery, evaluate Firebase Cloud Messaging as a wake/result-available hint. FCM transport encryption alone is not end-to-end content encryption. Keep prompts and results out of push payloads; authenticated fetch obtains the authorized result. Background execution, force-stop, Doze, token rotation and notification delivery must be tested on actual phones. A push is not an authoritative run receipt or guaranteed real-time wake. <a href="https://firebase.google.com/docs/cloud-messaging/customize-messages/set-message-type">FCM message types</a>, <a href="https://firebase.google.com/docs/cloud-messaging/encryption">FCM encryption</a>.</p>
+<h2 id="first-release-scope">First release scope</h2>
+<p>Owner pairing by a short-lived trusted QR/challenge, per-device grants bound to workflow revision, one-run Mac serialization, Text-only input, status/recovery/stop, expiring commands, bounded result inbox, completion notifications, device revocation, and clear offline/busy/permission/model-unavailable outcomes.</p>
+<p>First workflows: input-driven Google search in Chrome, Framer → Subframe, text transformation and an optional on-device summarizer. The existing fixed-query search fixture needs input parameterization. Shared workflows should be noninteractive; file pickers and result dialogs require a remote result adapter or rejection. The gateway cannot bypass macOS permissions, wake a sleeping machine or provide Apple's model on Android.</p>
+<p>Native phone action execution, arbitrary shell/file routes, remote workflow import/edit, automatic retries of ambiguous side effects, unattended login-service installation and a general chat-model API are outside this scope. Existing Mac model features remain available locally.</p>
+<h2 id="pairing-and-platform-apis">Pairing and platform APIs</h2>
+<p>Pair the owner's Android and Mac identities through a single-use expiring challenge and confirmation on the Mac. Store credentials in Android Keystore and Mac Keychain. Bind each message to device, destination, request ID, workflow revision and expiry. TLS validation stays enabled. Refresh/revoke gateway sessions and phone push tokens independently of workflow grants.</p>
+<p>Mac: an outbound transport actor, URLSession WebSocket or a reviewed maintained messaging client, Keychain/Security and an awaitable run coordinator. The current app includes an outbound polling connector and browser inbox; native Kotlin remains future work. Android: Kotlin/Compose, lifecycle-aware networking, Keystore, authenticated result fetch and notification channels. <a href="https://developer.apple.com/documentation/foundation/urlsessionwebsockettask">URLSession WebSocket</a>, <a href="https://developer.android.com/privacy-and-security/keystore">Android Keystore</a>, <a href="https://developer.android.com/privacy-and-security/security-config">network security configuration</a>.</p>
+<p>LAN discovery, if added later, must follow current <a href="https://developer.apple.com/documentation/technotes/tn3179-understanding-local-network-privacy">Apple local-network privacy</a> and <a href="https://developer.android.com/privacy-and-security/local-network-permission">Android local-network permission</a> guidance. It is not required for the internet relay design.</p>
+<h2 id="failure-and-evaluation-matrix">Failure and evaluation matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Required result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unknown/revoked phone or changed workflow</td>
+<td>Reject on Mac before execution or private library disclosure</td>
+</tr>
+<tr>
+<td>Gateway receives but Mac does not accept</td>
+<td>Distinct delivery state; no false Running/Completed</td>
+</tr>
+<tr>
+<td>Duplicate command/event/push</td>
+<td>One run, ordered/deduplicated result, one terminal notification</td>
+</tr>
+<tr>
+<td>Same request ID, different content</td>
+<td>Conflict</td>
+</tr>
+<tr>
+<td>Mac crashes after browser/file side effect</td>
+<td>Interrupted/unknown outcome; no automatic replay</td>
+</tr>
+<tr>
+<td>Mac asleep/offline/busy</td>
+<td>Explicit unavailable/busy; expiring command cannot execute later silently</td>
+</tr>
+<tr>
+<td>Phone background/kill/force-stop/network switch</td>
+<td>Results recoverable on reopen; no promise of instant push</td>
+</tr>
+<tr>
+<td>Notification denied/token changed</td>
+<td>Inbox works; token refresh and revocation handled</td>
+</tr>
+<tr>
+<td>Gateway outage/reconnect/retention expiry</td>
+<td>Read-only recovery, explicit expiry, no hidden new run</td>
+</tr>
+<tr>
+<td>Stop during model streaming</td>
+<td>Authorized cooperative cancellation; prior side effects remain</td>
+</tr>
+<tr>
+<td>Prompt/result confidentiality</td>
+<td>No plaintext in push/logs; reviewed payload crypto and actual transport verification</td>
+</tr>
+<tr>
+<td>Other device's run/history</td>
+<td>Denied by both relay routing and Mac ownership checks</td>
+</tr>
+</tbody>
+</table>
+<p>Measure task completion, duplicate external effects, delivery/run latency distributions, result recovery, battery/network overhead and correction effort. No cost, latency, reliability or battery benchmarks have been measured.</p>
+<h2 id="implementation-sequence">Implementation sequence</h2>
+<ol>
+<li>Mac awaitable coordinator, revision grants and crash/idempotency journal with isolated fixtures.</li>
+<li>Provider-neutral messenger protocol, pairing and reviewed payload protection; determine hosting/retention/account policy before deployment.</li>
+<li>Internet gateway plus outbound Mac connector, expiration/presence/recovery fault checks.</li>
+<li>Android workflow/input/inbox UI and notification permission/push integration.</li>
+<li>Real-device Chrome/Subframe/model optional paths, then disconnect/revocation/crash/background matrix.</li>
+</ol>
+<p>Hosting provider, account enrollment, retention periods, cryptographic library and push service are implementation decisions still open. The owner's approval covers this architecture direction; no internet service has been deployed or third-party account configured.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>

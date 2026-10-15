@@ -1,0 +1,20 @@
+PASS Desktop fixture returns visible names only
+PASS Desktop request routes deterministically
+PASS explicit app target and prompt parsed
+PASS ChatGPT resolves to approved native app
+PASS unapproved target rejected
+PASS approved file content returned
+PASS approved folder contents returned
+PASS folder traversal, symlink escape and sibling prefix rejected
+PASS file command routes without inference
+PASS new chat command routes deterministically
+PASS Codex resolves to approved app
+PASS phone can disable Studio inference
+PASS file tool works with model disabled
+PASS disabled model rejects inference
+PASS phone can enable on-demand inference
+MODEL STATUS: Apple on-device model available
+PASS Apple model routes a knowledge question
+PASS Apple on-device assistant returns arithmetic answer
+PASS assistant streams output snapshots
+ASSISTANT VALIDATION PASS

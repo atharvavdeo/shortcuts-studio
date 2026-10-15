@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self';"><title>Shortcut Studio handbook — Shortcut Studio</title><style>body{margin:0;color:#20252c;background:#f5f6f8;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:#17334b;color:#fff;padding:24px}header a{color:#fff}main{max-width:1080px;margin:28px auto;padding:32px;background:#fff;border-radius:14px}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{font-size:13px}a{color:#145ba3;text-underline-offset:3px}h1,h2,h3{line-height:1.25;scroll-margin-top:24px}h2{margin-top:2em;border-bottom:1px solid #dbe0e7;padding-bottom:8px}table{border-collapse:collapse;width:100%;display:block;overflow:auto;margin:20px 0;font-size:14px}th,td{border:1px solid #dbe0e7;padding:9px 12px;text-align:left;vertical-align:top}th{background:#eef2f6}pre{background:#142b3c;color:#eff7fc;padding:18px;border-radius:8px;overflow:auto;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}p code,li code,td code{background:#eef2f6;padding:2px 4px;border-radius:4px;font-size:.9em}img{max-width:100%;height:auto}blockquote{border-left:4px solid #267289;padding-left:16px;color:#445361}.note,.local-file{color:#526170;font-size:14px}.diagram{margin:20px 0;padding:12px;border:1px solid #dbe0e7;border-radius:10px}footer{max-width:1080px;margin:20px auto;padding:12px;color:#526170;font-size:13px}@media(prefers-color-scheme:dark){body{background:#111920;color:#e6edf3}main{background:#19242e}a{color:#8bbaff}th,p code,li code,td code{background:#253745}th,td,h2{border-color:#40515e}.note,.local-file,footer{color:#a7bac9}}@media(max-width:700px){main{margin:0;padding:20px;border-radius:0}header{padding:18px}table{font-size:12px}}@media print{header nav,footer{display:none}body,main{background:white;color:black}main{margin:0;padding:0}pre{white-space:pre-wrap;background:#f0f0f0;color:black}a{color:black}h2{break-after:avoid}tr,img{break-inside:avoid}}</style></head><body><header><strong>Shortcut Studio · offline handbook</strong><nav aria-label="Handbook chapters"><a href="ACTION_REFERENCE.html">Action Reference</a> <a href="ANDROID_SCOPE.html">Android Scope</a> <a href="APPLE_STANDARDS_AUDIT.html">Apple Standards Audit</a> <a href="CHECKPOINT_2026_10_14.html">Checkpoint 2026 10 14</a> <a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare Framework</a> <a href="COMPARISON.html">Comparison</a> <a href="DEVELOPER_GUIDE.html">Developer Guide</a> <a href="index.html">Handbook</a> <a href="HOSTED_GATEWAY.html">Hosted Gateway</a> <a href="MAC_ASSISTANT_UPGRADE.html">Mac Assistant Upgrade</a> <a href="MESSENGER_GUIDE.html">Messenger Guide</a> <a href="PHONE_AUTHORING.html">Phone Authoring</a> <a href="PRIVACY_AND_SECURITY.html">Privacy And Security</a> <a href="RELEASE_GUIDE.html">Release Guide</a> <a href="REMOTE_PROTOCOL_PROPOSAL.html">Remote Protocol Proposal</a> <a href="SOURCES.html">Sources</a> <a href="SWIFT_API_REFERENCE.html">Swift Api Reference</a> <a href="SYSTEM_CONSTRUCTION.html">System Construction</a> <a href="USER_GUIDE.html">User Guide</a> <a href="VERIFICATION.html">Verification</a></nav></header><main><p class="note">Reviewed 14 October 2026. Local app/source downloads are in the source README. Android browser messenger is implemented; native Android and permanent hosting remain future work.</p><h1 id="shortcut-studio-handbook">Shortcut Studio handbook</h1>
+<p><strong>Version 0.6.0 · reviewed 14 October 2026 · macOS implementation</strong></p>
+<p>This handbook is for people running workflows, developers extending the Swift implementation, and contributors planning the Android companion. It documents the current implementation, its construction, the platform APIs it calls, and the checks needed to distribute it responsibly.</p>
+<p>The current app has 67 action definitions, an independent interpreter, native macOS controls, local persistence, six automation triggers, and Apple on-device model integration. Apple Shortcuts delegation is optional. Android Chrome command delivery is implemented through a test messenger gateway; native Android remains future work. Neither this handbook nor a successful build certifies Apple approval, complete HIG conformity, or one-to-one Shortcuts parity.</p>
+<h2 id="read-in-this-order">Read in this order</h2>
+<table>
+<thead>
+<tr>
+<th>Reader</th>
+<th>Start here</th>
+<th>Continue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New user</td>
+<td><a href="USER_GUIDE.html">User guide</a></td>
+<td><a href="ACTION_REFERENCE.html">Action reference</a>, <a href="PRIVACY_AND_SECURITY.html">privacy and security</a></td>
+</tr>
+<tr>
+<td>Swift developer</td>
+<td><a href="DEVELOPER_GUIDE.html">Developer guide</a></td>
+<td><a href="SWIFT_API_REFERENCE.html">Swift API reference</a>, <a href="SYSTEM_CONSTRUCTION.html">system construction</a></td>
+</tr>
+<tr>
+<td>Designer / release owner</td>
+<td><a href="APPLE_STANDARDS_AUDIT.html">Apple standards audit</a></td>
+<td><a href="RELEASE_GUIDE.html">Release guide</a>, <a href="VERIFICATION.html">verification</a></td>
+</tr>
+<tr>
+<td>Deployment/framework contributor</td>
+<td><a href="CLOUDFLARE_FRAMEWORK.html">Cloudflare setup framework</a></td>
+<td><a href="MESSENGER_GUIDE.html">Messenger guide</a></td>
+</tr>
+<tr>
+<td>Phone user</td>
+<td><a href="PHONE_AUTHORING.html">Create and run phone shortcuts</a></td>
+<td><a href="MESSENGER_GUIDE.html">Messenger setup and use</a>, <a href="ANDROID_SCOPE.html">Android scope</a></td>
+</tr>
+<tr>
+<td>Android contributor</td>
+<td><a href="ANDROID_SCOPE.html">Android scope and evaluation</a></td>
+<td><a href="REMOTE_PROTOCOL_PROPOSAL.html">proposed command protocol</a></td>
+</tr>
+<tr>
+<td>Product reviewer</td>
+<td><a href="COMPARISON.html">Comparison with Apple Shortcuts</a></td>
+<td><a href="APPLE_STANDARDS_AUDIT.html">standards audit</a>, verification evidence</td>
+</tr>
+</tbody>
+</table>
+<h2 id="three-distinct-execution-paths">Three distinct execution paths</h2>
+<ol>
+<li><strong>Independent actions:</strong> a typed Swift interpreter resolves references, validates blocks, and performs an action through the core or macOS host.</li>
+<li><strong>Apple bridge:</strong> the host spawns Apple's supported <code>shortcuts</code> CLI. Apple executes the delegated workflow; Studio handles bounded input/output and cancellation of the CLI process.</li>
+<li><strong>On-device model:</strong> a fresh <code>LanguageModelSession</code> uses <code>SystemLanguageModel.default</code>. Text snapshots stream; authoring uses two structured requests. The interpreter executes accepted actions. No automatic cloud fallback is configured.</li>
+</ol>
+<h2 id="distribution-and-help">Distribution and help</h2>
+<ul>
+<li><span class="local-file" title="This file is in the source checkout; downloads are linked in its README.">Local app ZIP</span>: unzip and open the native app on this Mac.</li>
+<li><span class="local-file" title="This file is in the source checkout; downloads are linked in its README.">Local source ZIP</span>: source, examples, scripts, documentation, and synthetic verification fixtures.</li>
+<li>The packaged app's <strong>Help → Shortcut Studio Handbook</strong> opens an offline HTML edition.</li>
+<li>Online download hosting is intentionally not configured. These links are local files, not public release URLs.</li>
+</ul>
+<p>The current local package uses an ad hoc signature with hardened runtime. Developer ID signing and notarization are separate release steps. The project has no selected public source license; this handbook describes implementation and does not assign a license.</p>
+<h2 id="evidence-hierarchy">Evidence hierarchy</h2>
+<p>Source defines behavior. Automated tests establish their named cases. Native UI observations establish their specific interactions. A user's confirmation is identified as such. Apple and Android documentation establish platform guidance. Proposed architecture and estimates are explicitly marked as proposals. A green badge is a dated summary, not continuous CI or approval by Apple.</p>
+<h2 id="maintenance">Maintenance</h2>
+<p>Update this handbook when behavior changes. Regenerate the catalog with <code>bash scripts/generate-reference.sh</code>; render the offline edition with <code>python3 scripts/render-handbook.py</code>; run the applicable checks before packaging. <a href="SOURCES.html">Sources</a> records primary references. <a href="RELEASE_GUIDE.html">Release guide</a> explains the verification and packaging scripts.</p>
+<h2 id="mac-assistant-upgrade">Mac assistant upgrade</h2>
+<p>See <a href="MAC_ASSISTANT_UPGRADE.html">files, model controls, app results and permanent connection setup</a> for version 0.5.0 capabilities and limits.</p>
+<h2 id="hosted-gateway">Hosted gateway</h2>
+<p><a href="HOSTED_GATEWAY.html">Stable hosted URL, migration, deployment and evidence</a>.</p></main><footer>Independent macOS workflow application. No Apple approval or full-parity claim. Print this page using your browser’s Print command.</footer></body></html>
