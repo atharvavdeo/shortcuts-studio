@@ -6,6 +6,10 @@
 
 [Implementation, evidence, unresolved gaps and ordered investigation](docs/CHECKPOINT_2026_10_14.md). Location automation and recipient-aware messaging are not implemented.
 
+## Android-first local agent
+
+[Native Kotlin foundation](android-agent/README.md), [Google AI Edge Gallery source investigation](research/android-first/GALLERY_SOURCE_INVESTIGATION.md), [model research](research/android-first/MODEL_RESEARCH.md), and [resource contract](android-agent/policy/RESOURCE_CONTRACT.md). The native app is in development: core admission/routing code and a Compose shell exist; no Android APK or on-device inference is qualified yet. The Swift app remains separate.
+
 ## Handbook and local downloads
 
 - [Complete handbook](docs/HANDBOOK.md), [offline HTML edition](docs/site/index.html), also bundled under **Help → Shortcut Studio Handbook**.

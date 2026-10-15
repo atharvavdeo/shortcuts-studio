@@ -1,0 +1,40 @@
+{
+  "sourceCommit": "8f5f2a0bdb7c81693384dbdecbabec9b1e8d7f4e",
+  "sourcePath": "model_allowlists/1_0_20.json",
+  "status": "Source metadata only; file bytes are not peak RAM; no artifact is enabled or benchmarked.",
+  "artifacts": [
+    {
+      "name": "Gemma-4-E2B-it",
+      "modelId": "litert-community/gemma-4-E2B-it-litert-lm",
+      "modelFile": "gemma-4-E2B-it.litertlm",
+      "sizeInBytes": 2588147712,
+      "commitHash": "6e5c4f1e395deb959c494953478fa5cec4b8008f",
+      "minDeviceMemoryInGb": 8,
+      "artifactSha256": null,
+      "deviceQualified": false,
+      "enabledForDownload": false
+    },
+    {
+      "name": "Gemma3-1B-IT",
+      "modelId": "litert-community/Gemma3-1B-IT",
+      "modelFile": "gemma3-1b-it-int4.litertlm",
+      "sizeInBytes": 584417280,
+      "commitHash": "42d538a932e8d5b12e6b3b455f5572560bd60b2c",
+      "minDeviceMemoryInGb": 6,
+      "artifactSha256": null,
+      "deviceQualified": false,
+      "enabledForDownload": false
+    },
+    {
+      "name": "MobileActions-270M",
+      "modelId": "litert-community/functiongemma-270m-ft-mobile-actions",
+      "modelFile": "mobile_actions_q8_ekv1024.litertlm",
+      "sizeInBytes": 288964608,
+      "commitHash": "38942192c9b723af836d489074823ff33d4a3e7a",
+      "minDeviceMemoryInGb": 6,
+      "artifactSha256": null,
+      "deviceQualified": false,
+      "enabledForDownload": false
+    }
+  ]
+}
